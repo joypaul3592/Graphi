@@ -9,12 +9,16 @@ import ReactGraph from './Components/ReactGraph/ReactGraph';
 function App() {
 
   const rawData = [
-    { label: 'Mon', aValue: 40, bValue: 62 },
+    { label: 'Mon', aValue: 200, bValue: 62 },
     { label: 'Tue', aValue: 14, bValue: 68 },
     { label: 'Wed', aValue: 22, bValue: 76 },
     { label: 'Thu', aValue: 43, bValue: 54 },
-    { label: 'Fri', aValue: 33, bValue: 58 },
+    { label: 'Fri', aValue: 33, bValue: 58 }
   ];
+  // { label: 'Tue', aValue: 14, bValue: 68 },
+  // { label: 'Wed', aValue: 22, bValue: 76 },
+  // { label: 'Thu', aValue: 43, bValue: 54 },
+  // { label: 'Fri', aValue: 33, bValue: 58 },
 
   return (
     <div className="App">
