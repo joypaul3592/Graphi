@@ -1,6 +1,9 @@
 import './App.css';
 import BarChart2 from './Components/BarChart2/BarChart2';
 import Graph from './Components/Graph/Graph';
+import HorizentalBar from './Components/HorizentalBar/HorizentalBar';
+import LineChart from './Components/LineChart/LineChart';
+import LineChart2 from './Components/LineChart2/LineChart2';
 import ReactGraph from './Components/ReactGraph/ReactGraph';
 
 function App() {
@@ -17,7 +20,10 @@ function App() {
     <div className="App">
       <h1>Hello</h1>
       <div className=' w-1/2 mx-auto mt-40'> <BarChart2 data={rawData} /></div>
+      <div className=' w-1/2 mx-auto mt-40 '> <HorizentalBar data={rawData} /></div>
       <div className=' w-1/2 mx-auto my-40  p-2'><ReactGraph></ReactGraph></div>
+      <div className=' w-1/2 mx-auto my-40  p-2 '><LineChart></LineChart></div>
+      <div className=' w-1/2 mx-auto my-40  p-2 '><LineChart2></LineChart2></div>
     </div>
   );
 }
