@@ -1,0 +1,22 @@
+[
+    {
+      "subject": "Hindi",
+      "marks": "65"
+    },
+    {
+      "subject": "Math",
+      "marks": "65"
+    },
+    {
+      "subject": "English",
+      "marks": "85"
+    },
+    {
+      "subject": "Science",
+      "marks": "65"
+    },
+    {
+      "subject": "SocialScience",
+      "marks": "64"
+    }
+  ]

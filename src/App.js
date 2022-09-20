@@ -1,9 +1,12 @@
 import './App.css';
+import BarChart from './BarChart';
+import PieChart from './PieChart';
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello</h1>
+      <PieChart />
+      <BarChart />
     </div>
   );
 }
