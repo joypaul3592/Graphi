@@ -51,7 +51,7 @@ export default function SingleBarChart({ Data }) {
                 datasets: [
                     {
                         label: '# of Pears',
-                        data: data?.map(c => c.label === hander ? Input_value : c.aValue),
+                        data: data.map(c => c.label === hander ? Input_value : c.aValue),
                         //datasetIndex: data.map(c => c.Id),
                         fill: true,
                         tension: 0.4,
