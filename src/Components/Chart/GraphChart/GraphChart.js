@@ -1,7 +1,7 @@
 import React from 'react';
 import Geogebra from 'react-geogebra';
-import './ReactGraph.css'
-const ReactGraph = () => {
+import './GraphChart.css'
+const GraphChart = () => {
     return (
         <div >
             <Geogebra />
@@ -9,4 +9,4 @@ const ReactGraph = () => {
     );
 };
 
-export default ReactGraph;
+export default GraphChart;
