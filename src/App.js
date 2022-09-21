@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App">
       <h1>Hello</h1>
-      <div className=' w-1/2 mx-auto mt-40'> <BarChart2 Data={rawData} /></div>
+      <div className=' w-1/2 mx-auto mt-40 bg-stone-600 text-white'> <BarChart2 Data={rawData} /></div>
       {/* <div className=' w-1/2 mx-auto my-40  p-2'><ReactGraph></ReactGraph></div> */}
     </div>
   );
