@@ -4,6 +4,7 @@ import 'chartjs-plugin-dragdata'
 
 
 export default function BarChart2({ Data }) {
+    console.log(Data)
     /* ================= input value  niye kaj kora hossce  vai  ===============  */
 
     const [Input_value, setInputValue] = useState()
@@ -29,8 +30,7 @@ export default function BarChart2({ Data }) {
                 datasets: [
                     {
                         label: '# of Pears',
-                        data: data.map(c => c.label === filterData.option_value ? filterData.Input_value : c.aValue),
-                        //datasetIndex: data.map(c => c.Id),c.label === option_value ? sumbitValue :
+                        data: data?.map(c => c?.label === filterData?.option_value ? filterData?.Input_value : c?.aValue),
                         fill: true,
                         tension: 0.4,
                         borderWidth: 1,
@@ -62,21 +62,12 @@ export default function BarChart2({ Data }) {
                         // Change while dragging 
                         onDrag: function (e, datasetIndex, index, value) {
                             e.target.style.cursor = 'grabbing'
-                            // console.log('On Dragging ', datasetIndex, index, value)
-                            // if(datasetIndex == 0) {
-                            //   data[index].aValue = value
-                            // }
-
-                            // if(datasetIndex == 1) {
-                            //   data[index].bValue = value
-                            // }
-
-                            // Data.onHandleChange(data);
+                           
 
                         },
                         // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
-                            // console.log('On Drag End ', datasetIndex, index, value)
+                         
                             e.target.style.cursor = 'default'
 
                             if (datasetIndex == 0) {
@@ -122,7 +113,7 @@ export default function BarChart2({ Data }) {
                 </select>
                 <input onChange={(e) => setInputValue(e.target.value)} type="number" className='border-black border-2' />
                 <button onClick={() => submitButton(Input_value, option_value)} type="button" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Submit</button>
-               
+
 
             </div>
             {isLoaded &&
