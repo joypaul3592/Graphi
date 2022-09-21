@@ -3,7 +3,7 @@ import { Bar } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
 
 
-export default function BarChart2({ Data }) {
+export default function SingleBarChart({ Data }) {
 
     // var constdata = []
     // for (let x = 0; x < Data?.data?.length; x++) {
@@ -35,9 +35,6 @@ export default function BarChart2({ Data }) {
         return final;
 
     }
-
-
-
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);

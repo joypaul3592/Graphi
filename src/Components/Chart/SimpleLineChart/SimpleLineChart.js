@@ -3,7 +3,7 @@ import { Bar, Line } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
 
 
-export default function LineChart(props) {
+export default function SimpleLineChart(props) {
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
