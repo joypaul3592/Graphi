@@ -1,0 +1,7 @@
+button.gwt-StackPanelItem {
+    display: none;
+}
+
+.ggbtoolbarpanel.smart-nb-draggable.toolbarPanelNorth.toolbarPanel {
+    background-color: rgba(255, 200, 0, 0.337);
+}
