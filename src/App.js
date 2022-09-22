@@ -11,15 +11,6 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
 
-  const rawData = [
-    { label: 'Mon', aValue: 100 },
-    { label: 'Tue', aValue: 14 },
-    { label: 'Wed', aValue: 22 },
-    { label: 'Thu', aValue: 43 },
-    { label: 'Fri', aValue: 33 },
-    { label: 'Mon', aValue: 200 },
-    { label: 'Tue', aValue: 14 }
-  ];
 
   return (
     <div className="App">
