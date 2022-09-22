@@ -4,9 +4,9 @@ import 'chartjs-plugin-dragdata'
 import { width } from '@mui/system';
 
 
-export default function BarChart2() {
-  
-    
+export default function HomeBarChart() {
+
+
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
 
@@ -20,30 +20,47 @@ export default function BarChart2() {
     const buildDataSet = (data) => {
 
 
-        let labels = data?.map(c => c.label);
+        // let labels = data?.map(c => c.label);
 
         let options = {
             type: 'line',
             data: {
-                labels: labels,
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [
                     {
-                        label: '# of Pears',
-                        data: data?.map(c => c?.yValue),
+                        data: [65, 59, 80, 81, 56, 55, 40, 78, 45, 66, 83, 62],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
                         fill: true,
                         tension: 0.4,
                         borderWidth: 1,
-                        borderColor: 'red',
-                        backgroundColor: 'rgb(325, 130, 230)',
                         pointHitRadius: 25
                     }
                 ]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         min: 0,
-                        max: 200
+                        max: 90
                     }
                 },
                 onHover: function (e) {
@@ -52,6 +69,9 @@ export default function BarChart2() {
                     else e.native.target.style.cursor = 'default'
                 },
                 plugins: {
+                    legend: {
+                        display: false
+                    },
                     dragData: {
                         round: 1,
                         showTooltip: true,
@@ -153,16 +173,10 @@ export default function BarChart2() {
     }
 
 
-  
+
 
     return (
         <div>
-
-            <div>
-                <input onBlur={(e) => setlabel(e.target.value)} type="text" placeholder='Names' className='border-4' />
-                <input onBlur={(e) => setaValue(e.target.value)} type="number" placeholder='Number' className='border-4' />
-                <button onClick={() => submitPost(label, yValue)} type="button" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Submit</button>
-            </div>
             {/* ============ ============= */}
             <div className='grid grid-cols-3'>
                 {
@@ -178,6 +192,8 @@ export default function BarChart2() {
 
             {isLoaded &&
                 <Bar
+
+                    className=' w-full h-80'
                     redraw={shouldRedraw}
                     data={localOption.data}
                     options={localOption.options}
