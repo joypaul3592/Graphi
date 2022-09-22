@@ -71,7 +71,7 @@ export default function SimpleLineChart(props) {
         }
         return options;
     }
-
+    
 
     let localOption = buildDataSet(props.data);
 

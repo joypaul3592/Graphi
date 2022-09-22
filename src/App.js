@@ -7,16 +7,18 @@ import SimpleLineChart2 from './Components/Chart/SimpleLineChart2/SimpleLineChar
 import SingleBarChart from './Components/Chart/SingleBarChart/SingleBarChart';
 import Home from './Components/Home/Home';
 import Navbar from './Components/Navbar/Navbar';
-
+import { Routes, Route } from "react-router-dom";
 
 function App() {
 
   const rawData = [
-    { label: 'Mon', aValue: 200, bValue: 62 },
-    { label: 'Tue', aValue: 14, bValue: 68 },
-    { label: 'Wed', aValue: 22, bValue: 76 },
-    { label: 'Thu', aValue: 43, bValue: 54 },
-    { label: 'Fri', aValue: 33, bValue: 58 }
+    { label: 'Mon', aValue: 100 },
+    { label: 'Tue', aValue: 14 },
+    { label: 'Wed', aValue: 22 },
+    { label: 'Thu', aValue: 43 },
+    { label: 'Fri', aValue: 33 },
+    { label: 'Mon', aValue: 200 },
+    { label: 'Tue', aValue: 14 }
   ];
 
   return (
@@ -27,16 +29,19 @@ function App() {
         </div>
         <hr className=' h-[80vh] my-auto w-[1px] bg-teal-700' />
         <div className=' h-full w-full'>
-          <Home></Home>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/singleBarChart" element={<SingleBarChart />} />
+            <Route path="/horizontalBarChart" element={<HorizontalBarChart />} />
+            <Route path="/multipleBarChart" element={<MultipleBarChart />} />
+            <Route path="/simpleLineChart" element={<SimpleLineChart />} />
+            <Route path="/graphChart" element={<GraphChart />} />
+     
+          </Routes>
+
         </div>
       </div>
 
-      {/* <div className=' w-1/2 mx-auto mt-40'> <SingleBarChart data={rawData} /></div>
-      <div className=' w-1/2 mx-auto mt-40'> <MultipleBarChart data={rawData} /></div>
-      <div className=' w-1/2 mx-auto mt-40'> <HorizontalBarChart data={rawData} /></div>
-      <div className=' w-1/2 mx-auto my-40'><SimpleLineChart></SimpleLineChart></div>
-      <div className=' w-1/2 mx-auto my-40'><SimpleLineChart2></SimpleLineChart2></div>
-      <div className=' w-1/2 mx-auto my-40'><GraphChart></GraphChart></div> */}
     </div>
   );
 }

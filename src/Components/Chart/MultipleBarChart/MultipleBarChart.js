@@ -4,37 +4,9 @@ import 'chartjs-plugin-dragdata'
 
 
 export default function MultipleBarChart({ Data }) {
-
-    // var constdata = []
-    // for (let x = 0; x < Data?.data?.length; x++) {
-    //     const value = Data?.data[x]?.aValue;
-    //     constdata.push(value)
-    // }
-
-    /* ================= input value  niye kaj kora hossce  vai  ===============  */
     const [Input_value, setInputValue] = useState()
     const [hander, handleChange] = useState()
-    const submitButton = (Input_value, hander, Data) => {
-        console.log(Data)
-        if (Input_value && hander) {
-            let result = Data.findIndex(na => na.label == hander)
-            // result[0].aValue = hander
-            console.log(result[0])
-
-        } else {
-            console.log("hghdgsohidgshgsd")
-        }
-    }
-
-    const dekhikiace = (hander, data, Input_value) => {
-        let final;
-        let result = data?.filter(na => na?.label == hander)
-        if (result[0]?.label) {
-            final = Input_value
-        }
-        return final;
-
-    }
+   
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -51,8 +23,7 @@ export default function MultipleBarChart({ Data }) {
                 datasets: [
                     {
                         label: '# of Pears',
-                        data: data?.map(c => c.label === hander ? Input_value : c.aValue),
-                        //datasetIndex: data.map(c => c.Id),
+                        data: data?.map(c => c.aValue),
                         fill: true,
                         tension: 0.4,
                         borderWidth: 1,
@@ -144,17 +115,7 @@ export default function MultipleBarChart({ Data }) {
 
     return (
         <div>
-            {/* ==================== i try to empilimet data ============== */}
-            <div className='text-left my-10 text-bold text-red-500'>
-                <h1 className='text-xl'>Thsi is options value create </h1>
-                <select onChange={(e) => handleChange(e.target.value)}>
-                    {Data?.map((option) => (
-                        <option key={option.label} value={option?.label}>{option?.label}</option>
-                    ))}
-                </select>
-                <input onChange={(e) => setInputValue(e.target.value)} type="number" className='border-black border-2' />
-                <button onClick={() => submitButton(Input_value, hander, Data)} className='btn'>Submit_button</button>
-            </div>
+           
             {isLoaded &&
                 <Bar
                     redraw={shouldRedraw}

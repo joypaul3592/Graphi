@@ -19,7 +19,7 @@ const Navbar = () => {
                 <hr className=' bg-teal-700 h-[2px] w-8/12  ' />
                 <div className='  py-5'>
                     <NavLink
-                        to={'/h'}
+                        to={'/'}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -30,7 +30,7 @@ const Navbar = () => {
 
 
                     <NavLink
-                        to={'/hi'}
+                        to={'/SingleBarChart'}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -38,9 +38,18 @@ const Navbar = () => {
                             <p className=''>Simple Bar</p>
                         </div>
                     </NavLink>
+                    <NavLink
+                        to={'/horizontalBarChart'}
+                        className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
+                    >
+                        <div className='flex items-center  px-3 mb-8'>
+                            <HiChartBar className=' mr-3 text-teal-500' />
+                            <p className=''>Horizontal Bar</p>
+                        </div>
+                    </NavLink>
 
                     <NavLink
-                        to={'/hty'}
+                        to={'/multipleBarChart'}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -50,7 +59,7 @@ const Navbar = () => {
                     </NavLink>
 
                     <NavLink
-                        to={'/sfg'}
+                        to={'/simpleLineChart'}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -60,7 +69,7 @@ const Navbar = () => {
                     </NavLink>
 
                     <NavLink
-                        to={'/gs'}
+                        to={'/graphChart'}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
