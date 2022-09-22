@@ -33,8 +33,7 @@ export default function MultipleBarChart() {
                     },
                     {
                         label: '# of Apples',
-                        data: data?.map(c => c.bValue),
-                        //datasetIndex: data.map(c => c.Id),
+                        data: data?.map(c => c.xValue),
                         fill: true,
                         tension: 0.4,
                         borderWidth: 1,
@@ -103,7 +102,7 @@ export default function MultipleBarChart() {
 
     /* ===================== Data grt =========  */
     useEffect(() => {
-        fetch('http://localhost:5000/api/v1/grap/multipleBar', {
+        fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/multipleBar', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -120,7 +119,7 @@ export default function MultipleBarChart() {
     const [Delete, setDelete] = useState()
     if (Delete) {
         const id = Delete;
-        fetch(`http://localhost:5000/api/v1/grap/multipleBar/${id}`, {
+        fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/multipleBar/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -139,10 +138,11 @@ export default function MultipleBarChart() {
     /* ===================== Data Post =========  */
     const [label, setlabel] = useState('')
     const [yValue, setaValue] = useState(0)
-    const submitPost = (label, yValue) => {
-        if (label && yValue) {
-            const Data = { label: label, yValue: yValue }
-            fetch('http://localhost:5000/api/v1/grap/multipleBar', {
+    const [xValue, setxValue] = useState(0)
+    const submitPost = (label, yValue, xValue) => {
+        if (label && yValue && xValue) {
+            const Data = { label: label, yValue: yValue, xValue: xValue }
+            fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/multipleBar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -164,7 +164,8 @@ export default function MultipleBarChart() {
             <div>
                 <input onBlur={(e) => setlabel(e.target.value)} type="text" placeholder='Names' className='border-4' />
                 <input onBlur={(e) => setaValue(e.target.value)} type="number" placeholder='Number' className='border-4' />
-                <button onClick={() => submitPost(label, yValue)} type="button" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Submit</button>
+                <input onBlur={(e) => setxValue(e.target.value)} type="number" placeholder='Number' className='border-4' />
+                <button onClick={() => submitPost(label, yValue, xValue)} type="button" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Submit</button>
             </div>
             {/* ============ ============= */}
             <div className='grid grid-cols-3'>
