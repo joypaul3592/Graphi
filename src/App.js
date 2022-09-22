@@ -36,7 +36,7 @@ function App() {
             <Route path="/multipleBarChart" element={<MultipleBarChart />} />
             <Route path="/simpleLineChart" element={<SimpleLineChart />} />
             <Route path="/graphChart" element={<GraphChart />} />
-     
+
           </Routes>
 
         </div>
