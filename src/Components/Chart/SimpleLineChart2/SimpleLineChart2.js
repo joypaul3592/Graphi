@@ -131,10 +131,6 @@ export default function SimpleLineChart2() {
         }
     }
 
-
-
-
-
     return (
         <div>
             <div>
