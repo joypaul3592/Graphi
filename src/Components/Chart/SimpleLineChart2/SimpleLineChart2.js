@@ -113,7 +113,7 @@ export default function SimpleLineChart2() {
     const [yValue, setaValue] = useState(0)
     const submitPost = (label, yValue) => {
         if (label && yValue) {
-            const Data = { label: label, yValue: yValue}
+            const Data = { label: label, yValue: yValue }
             fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/dualLine', {
                 method: 'POST',
                 headers: {
@@ -132,34 +132,47 @@ export default function SimpleLineChart2() {
     }
 
     return (
-        <div>
-            <div>
-                <input onBlur={(e) => setlabel(e.target.value)} type="text" placeholder='Names' className='border-4' />
-                <input onBlur={(e) => setaValue(e.target.value)} type="number" placeholder='Number' className='border-4' />
-                <button onClick={() => submitPost(label, yValue)} type="button" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Submit</button>
-            </div>
-            {/* ============ ============= */}
-            <div className='grid grid-cols-3'>
-                {
-                    Data.map(data => <div key={data._id}>
-                        <div className='flex gap-10'>
-                            <p>{data.label}</p>
-                            <p>{data.yValue}</p>
-                            <p onClick={() => setDelete(data._id)} className='text-red-500 cursor-pointer border-2 bg-black'>X</p>
-                        </div>
-                    </div>)
-                }
-            </div>
-            {isLoaded &&
-                <Line
-                    redraw={shouldRedraw}
-                    data={localOption.data}
-                    options={localOption.options}
-                    plugins={localOption.plugins}
-                    fillStyle='lightGreen'
-                />
-            }
+        <div className=' h-full flex justify-center items-center'>
+            <div className='   mx-10 w-10/12 '>
 
-        </div >
+                <div className=' w-full'>
+                    <div className=' flex items-center justify-between gap-6'>
+                        <div className=' flex flex-col w-[50%] p-5 bg-white rounded-md shadow-md xl:px-10'>
+                            <h1 className=' text-purple-800 font-semibold '>Add Your Graph</h1>
+                            <hr className='mb-4 mt-1 bg-purple-800 h-[1.5px] w-1/2 flex mx-auto' />
+                            <input onBlur={(e) => setlabel(e.target.value)} type="text" placeholder='Names' className='bg-gray-100 px-3 py-1 rounded shadow-md' />
+
+                            <input onBlur={(e) => setaValue(e.target.value)} type="number" placeholder='Number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />
+
+                            <button onClick={() => submitPost(label, yValue)} type="button" class="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
+                        </div>
+                        {/* ============ ============= */}
+                        <div className=' bg-white w-[50%] h-[13rem] rounded-md shadow-md overflow-auto py-5 px-5'>
+                            {
+                                Data.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data._id}>
+                                    <p className=' font-medium'>{data.label}</p>
+                                    <p>{data.yValue}</p>
+                                    <p onClick={() => setDelete(data._id)} className='text-white cursor-pointer px-[6px] border-2 bg-red-400 rounded'>X</p>
+
+                                </div>)
+                            }
+                        </div>
+                    </div>
+                    <div className=' w-full bg-white mt-8 p-5 rounded-md shadow-md'>
+                        {isLoaded &&
+                            <Line
+                                redraw={shouldRedraw}
+                                data={localOption.data}
+                                options={localOption.options}
+                                plugins={localOption.plugins}
+                                fillStyle='lightGreen'
+                            />
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
     );
 }
+
