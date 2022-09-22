@@ -96,7 +96,7 @@ export default function BarChart2() {
 
     /* ===================== Data grt =========  */
     useEffect(() => {
-        fetch('http://localhost:5000/api/v1/grap', {
+        fetch('http://localhost:5000/api/v1/grap/singleBar', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ export default function BarChart2() {
     const [Delete, setDelete] = useState()
     if (Delete) {
         const id = Delete;
-        fetch(`http://localhost:5000/api/v1/grap/${id}`, {
+        fetch(`http://localhost:5000/api/v1/grap/singleBar/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ export default function BarChart2() {
     const submitPost = (label, yValue) => {
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
-            fetch('http://localhost:5000/api/v1/grap', {
+            fetch('http://localhost:5000/api/v1/grap/singleBar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -78,7 +78,7 @@ export default function HorizentalBar() {
 
     /* ===================== Data grt =========  */
     useEffect(() => {
-        fetch('http://localhost:5000/api/v1/grap', {
+        fetch('http://localhost:5000/api/v1/grap/horizentalBar', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export default function HorizentalBar() {
     const [Delete, setDelete] = useState()
     if (Delete) {
         const id = Delete;
-        fetch(`http://localhost:5000/api/v1/grap/${id}`, {
+        fetch(`http://localhost:5000/api/v1/grap/horizentalBar/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ export default function HorizentalBar() {
     const submitPost = (label, yValue) => {
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
-            fetch('http://localhost:5000/api/v1/grap', {
+            fetch('http://localhost:5000/api/v1/grap/horizentalBar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
