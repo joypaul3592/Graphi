@@ -3,7 +3,12 @@ import { Bar, Line } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
 
 
-export default function HorizontalBarChart(props) {
+export default function HorizentalBar() {
+    const [Data, setData] = useState([])
+    const [dataisLoaded, setdataisLoaded] = useState(false)
+
+
+
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
