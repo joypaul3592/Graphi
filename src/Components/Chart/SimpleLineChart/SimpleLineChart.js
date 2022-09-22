@@ -3,7 +3,7 @@ import { Bar, Line } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
 
 
-export default function LineChart2(props) {
+export default function SimpleLineChart(props) {
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -13,23 +13,30 @@ export default function LineChart2(props) {
         var options = {
             type: 'line',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: ['1', '2', '3', '4', '5'],
+                borderColor: "#fffff",
                 datasets: [{
-                    label: '# Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    // borderColor: 'rgb(75, 192, 192)',
-                    fill: true,
-                    tension: 0.4,
-                    borderWidth: 1,
-                    pointHitRadius: 25,
-                }
-                ]
+                    label: 'A',
+                    yAxisID: 'y',
+                    borderColor: 'rgb(75, 192, 192)',
+                    data: [90, 76, 54, 36, 10],
+                    pointHitRadius: 25
+                }]
             },
+            backgroundColor: "rgba(75,99,132)",
             options: {
                 scales: {
                     y: {
-                        min: 0,
-                        max: 20
+                        type: 'linear',
+                        position: 'left',
+                        max: 100,
+                        min: 0
+                    },
+                    y2: {
+                        type: 'linear',
+                        position: 'right',
+                        max: 1,
+                        min: 0
                     }
                 },
                 onHover: function (e) {
@@ -38,10 +45,16 @@ export default function LineChart2(props) {
                     else e.native.target.style.cursor = 'default'
                 },
                 plugins: {
+                    backgroundImage: {
+                        url: 'https://i.imgur.com/bQcg21b.jpg'
+                    },
                     dragData: {
-                        round: 1,
+                        backgroundImage: {
+                            url: 'https://i.imgur.com/bQcg21b.jpg'
+                        },
+                        round: 2,
                         showTooltip: true,
-                        onDragStart: function (e, datasetIndex, index, value) {
+                        onDragStart: function (e) {
                             // console.log(e)
                         },
                         onDrag: function (e, datasetIndex, index, value) {
@@ -58,7 +71,7 @@ export default function LineChart2(props) {
         }
         return options;
     }
-
+    
 
     let localOption = buildDataSet(props.data);
 

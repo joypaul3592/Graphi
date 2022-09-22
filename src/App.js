@@ -1,9 +1,13 @@
 import './App.css';
-import BarChart2 from './Components/BarChart2/BarChart2';
-import HorizentalBar from './Components/HorizentalBar/HorizentalBar';
-import LineChart from './Components/LineChart/LineChart';
-import LineChart2 from './Components/LineChart2/LineChart2';
-import ReactGraph from './Components/ReactGraph/ReactGraph';
+import GraphChart from './Components/Chart/GraphChart/GraphChart';
+import HorizontalBarChart from './Components/Chart/HorizontalBarChart/HorizontalBarChart';
+import MultipleBarChart from './Components/Chart/MultipleBarChart/MultipleBarChart';
+import SimpleLineChart from './Components/Chart/SimpleLineChart/SimpleLineChart';
+import SimpleLineChart2 from './Components/Chart/SimpleLineChart2/SimpleLineChart2';
+import SingleBarChart from './Components/Chart/SingleBarChart/SingleBarChart';
+import Home from './Components/Home/Home';
+import Navbar from './Components/Navbar/Navbar';
+
 
 function App() {
 
@@ -19,12 +23,22 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Hello</h1>
-      <div className=' w-1/2 mx-auto mt-40'> <BarChart2 /></div>
-      <div className=' w-1/2 mx-auto mt-40 '> <HorizentalBar data={rawData} /></div>
-      <div className=' w-1/2 mx-auto my-40  p-2'><ReactGraph></ReactGraph></div>
-      <div className=' w-1/2 mx-auto my-40  p-2 '><LineChart></LineChart></div>
-      <div className=' w-1/2 mx-auto my-40  p-2 '><LineChart2></LineChart2></div>
+      <div className=' lg:flex  h-screen max-w-7xl mx-auto px-10'>
+        <div className=' lg:w-60 lg:h-full  flex justify-center items-center '>
+          <Navbar></Navbar>
+        </div>
+        <hr className=' h-[80vh] my-auto w-[1px] bg-teal-700' />
+        <div className=' h-full w-full'>
+          <Home></Home>
+        </div>
+      </div>
+
+      {/* <div className=' w-1/2 mx-auto mt-40'> <SingleBarChart data={rawData} /></div>
+      <div className=' w-1/2 mx-auto mt-40'> <MultipleBarChart data={rawData} /></div>
+      <div className=' w-1/2 mx-auto mt-40'> <HorizontalBarChart data={rawData} /></div>
+      <div className=' w-1/2 mx-auto my-40'><SimpleLineChart></SimpleLineChart></div>
+      <div className=' w-1/2 mx-auto my-40'><SimpleLineChart2></SimpleLineChart2></div>
+      <div className=' w-1/2 mx-auto my-40'><GraphChart></GraphChart></div> */}
     </div>
   );
 }

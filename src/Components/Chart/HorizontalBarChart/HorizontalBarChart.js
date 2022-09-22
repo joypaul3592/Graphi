@@ -1,51 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import { Bar } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
-import { width } from '@mui/system';
 
 
-export default function BarChart2() {
-  
-    
-    const [Data, setData] = useState([])
-    const [dataisLoaded, setdataisLoaded] = useState(false)
-
-
-
+export default function HorizontalBarChart(props) {
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
 
-
     const buildDataSet = (data) => {
-
-
         let labels = data?.map(c => c.label);
-
-        let options = {
-            type: 'line',
+        var options = {
+            type: 'bar',
             data: {
                 labels: labels,
                 datasets: [
                     {
-                        label: '# of Pears',
+                        label: "Population (millions)",
+                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                         data: data?.map(c => c?.yValue),
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 1,
-                        borderColor: 'red',
-                        backgroundColor: 'rgb(325, 130, 230)',
-                        pointHitRadius: 25
                     }
                 ]
             },
             options: {
-                scales: {
-                    y: {
-                        min: 0,
-                        max: 200
-                    }
-                },
+                indexAxis: 'y',
                 onHover: function (e) {
                     const point = e.chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false)
                     if (point.length) e.native.target.style.cursor = 'grab'
@@ -55,44 +33,43 @@ export default function BarChart2() {
                     dragData: {
                         round: 1,
                         showTooltip: true,
-                        onDragStart: function (e, element) {
-
+                        onDragStart: function (e) {
+                            // console.log(e)
                         },
-                        // Change while dragging 
                         onDrag: function (e, datasetIndex, index, value) {
                             e.target.style.cursor = 'grabbing'
+                            // console.log(e, datasetIndex, index, value)
                         },
-                        // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
-
                             e.target.style.cursor = 'default'
-
-                            if (datasetIndex == 0) {
-                                data[index].yValue = value
-                            }
-
-                            if (datasetIndex == 1) {
-                                data[index].bValue = value
-                            }
-
-                            Data.onHandleChange(data);
+                            // console.log(datasetIndex, index, value)
                         },
+                    }
+                },
+                scales: {
+                    x: {
+                        max: 6000,
+                        min: 0
                     }
                 }
             }
         }
-
         return options;
     }
 
 
     let localOption = buildDataSet(Data);
 
+
     useEffect(() => {
         setTimeout(() => {
             setIsLoaded(true)
         }, 200);
     }, [])
+
+
+
+
 
     /* ===================== Data grt =========  */
     useEffect(() => {
@@ -153,7 +130,6 @@ export default function BarChart2() {
     }
 
 
-  
 
     return (
         <div>
@@ -176,15 +152,18 @@ export default function BarChart2() {
                 }
             </div>
 
+
+
             {isLoaded &&
                 <Bar
                     redraw={shouldRedraw}
                     data={localOption.data}
                     options={localOption.options}
                     plugins={localOption.plugins}
+                    fillStyle='lightGreen'
                 />
             }
 
-        </div>
+        </div >
     );
 }

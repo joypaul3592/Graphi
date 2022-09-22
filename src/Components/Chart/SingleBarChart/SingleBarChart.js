@@ -1,34 +1,77 @@
 import React, { useState, useEffect } from 'react'
-import { Bar, Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
+import { width } from '@mui/system';
 
 
-export default function HorizentalBar() {
-    const [Data, setData] = useState([])
-    const [dataisLoaded, setdataisLoaded] = useState(false)
+export default function SingleBarChart({ Data }) {
 
+    // var constdata = []
+    // for (let x = 0; x < Data?.data?.length; x++) {
+    //     const value = Data?.data[x]?.aValue;
+    //     constdata.push(value)
+    // }
 
+    /* ================= input value  niye kaj kora hossce  vai  ===============  */
+    const [Input_value, setInputValue] = useState()
+    const [hander, handleChange] = useState()
+    const submitButton = (Input_value, hander, Data) => {
+        console.log(Data)
+        if (Input_value && hander) {
+            let result = Data.findIndex(na => na.label == hander)
+            // result[0].aValue = hander
+            console.log(result[0])
+
+        } else {
+            console.log("hghdgsohidgshgsd")
+        }
+    }
+
+    const dekhikiace = (data, hander, Data, Input_value) => {
+        let final;
+        let result = Data?.filter(na => na?.label == hander)
+        if (result[0]?.label) {
+            final = Input_value
+        }
+        return final;
+
+    }
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
 
+
     const buildDataSet = (data) => {
+
+
         let labels = data?.map(c => c.label);
-        var options = {
-            type: 'bar',
+
+        let options = {
+            type: 'line',
             data: {
                 labels: labels,
                 datasets: [
                     {
-                        label: "Population (millions)",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: data?.map(c => c?.yValue),
+                        label: '# of Pears',
+                        data: data.map(c => c.label === hander ? Input_value : c.aValue),
+                        //datasetIndex: data.map(c => c.Id),
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 1,
+                        borderColor: 'red',
+                        backgroundColor: 'rgb(325, 130, 230)',
+                        pointHitRadius: 25
                     }
                 ]
             },
             options: {
-                indexAxis: 'y',
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 200
+                    }
+                },
                 onHover: function (e) {
                     const point = e.chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false)
                     if (point.length) e.native.target.style.cursor = 'grab'
@@ -38,43 +81,44 @@ export default function HorizentalBar() {
                     dragData: {
                         round: 1,
                         showTooltip: true,
-                        onDragStart: function (e) {
-                            // console.log(e)
+                        onDragStart: function (e, element) {
+
                         },
+                        // Change while dragging 
                         onDrag: function (e, datasetIndex, index, value) {
                             e.target.style.cursor = 'grabbing'
-                            // console.log(e, datasetIndex, index, value)
                         },
+                        // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
+
                             e.target.style.cursor = 'default'
-                            // console.log(datasetIndex, index, value)
+
+                            if (datasetIndex == 0) {
+                                data[index].yValue = value
+                            }
+
+                            if (datasetIndex == 1) {
+                                data[index].bValue = value
+                            }
+
+                            Data.onHandleChange(data);
                         },
-                    }
-                },
-                scales: {
-                    x: {
-                        max: 6000,
-                        min: 0
                     }
                 }
             }
         }
+
         return options;
     }
 
 
     let localOption = buildDataSet(Data);
 
-
     useEffect(() => {
         setTimeout(() => {
             setIsLoaded(true)
         }, 200);
     }, [])
-
-
-
-
 
     /* ===================== Data grt =========  */
     useEffect(() => {
@@ -135,6 +179,7 @@ export default function HorizentalBar() {
     }
 
 
+  
 
     return (
         <div>
@@ -157,18 +202,15 @@ export default function HorizentalBar() {
                 }
             </div>
 
-
-
             {isLoaded &&
                 <Bar
                     redraw={shouldRedraw}
                     data={localOption.data}
                     options={localOption.options}
                     plugins={localOption.plugins}
-                    fillStyle='lightGreen'
                 />
             }
 
-        </div >
+        </div>
     );
 }
