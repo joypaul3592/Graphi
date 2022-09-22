@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { SiGraphql } from "react-icons/si";
 import { BiHomeAlt } from "react-icons/bi";
 import { HiChartBar, HiMenuAlt2 } from "react-icons/hi";
@@ -9,7 +9,7 @@ import { AiOutlineBorderlessTable, AiOutlineDotChart } from "react-icons/ai";
 import joinUs from '../../assect/JoinusImg.png'
 const Navbar = () => {
     const [menu, setMenu] = useState(false)
-
+    const { pathname } = useLocation()
     return (
         <div className=' flex justify-between items-center lg:flex-col h-full py-10 pb-12'>
             <div className='lg:hidden bg-green-200 cursor-pointer hover:shadow-lg h-8 w-8 fixed right-5 top-5 rounded-md'>
@@ -25,11 +25,11 @@ const Navbar = () => {
                 <div className={`bg-white lg:bg-transparent lg:bg-opacity-0 bg-opacity-40 backdrop-blur lg:shadow-none lg:backdrop-blur-none shadow-md lg:relative  fixed top-0 left-0 py-5 w-80 lg:w-full pl-10 lg:pl-0 pt-10 z-[10000] lg:pt-5 rounded-md  ${menu ? 'block' : 'hidden lg:block'}`}>
                     <NavLink
                         to={'/'}
-                        className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
+                        className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
                             <BiHomeAlt className=' mr-3 text-teal-500' />
-                            <p className=''>Home</p>
+                            <p className={`${pathname === "/" ? 'text-teal-500' : 'text-black'}`}>Home</p>
                         </div>
                     </NavLink>
 
