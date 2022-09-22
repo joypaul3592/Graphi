@@ -30,7 +30,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className=' mt-10 flex items-center justify-between gap-4 lg:gap-0'>
+            <div className=' mt-10 flex items-center justify-between gap-4 xl:gap-0'>
                 <div className=' bg-purple-800 hover:shadow-lg cursor-pointer relative xl:w-[24vw] w-full py-8 rounded-md overflow-hidden '>
                     <FaUsers className=' mx-auto text-5xl text-yellow-400' />
                     <h1 className=' text-white text-5xl'>2058</h1>

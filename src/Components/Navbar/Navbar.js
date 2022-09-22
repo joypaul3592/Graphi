@@ -24,7 +24,7 @@ const Navbar = () => {
                 <hr className=' bg-teal-700  hidden lg:block h-[2px] w-8/12  ' />
                 <div className={`bg-white lg:bg-transparent lg:bg-opacity-0 bg-opacity-40 backdrop-blur lg:shadow-none lg:backdrop-blur-none shadow-md lg:relative  fixed top-0 left-0 py-5 w-80 lg:w-full pl-10 lg:pl-0 pt-10 z-[10000] lg:pt-5 rounded-md  ${menu ? 'block' : 'hidden lg:block'}`}>
                     <NavLink
-                        to={'/home'}
+                        to={'/'}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>

@@ -30,7 +30,7 @@ function App() {
         <hr className=' hidden lg:block lg:h-[80vh] h-[1px] my-auto lg:w-[1px] bg-teal-700 w-full' />
         <div className=' h-full w-full'>
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/singleBarChart" element={<SingleBarChart />} />
             <Route path="/horizontalBarChart" element={<HorizontalBarChart />} />
             <Route path="/multipleBarChart" element={<MultipleBarChart />} />
