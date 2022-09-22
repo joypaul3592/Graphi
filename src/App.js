@@ -11,23 +11,14 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
 
-  const rawData = [
-    { label: 'Mon', aValue: 100 },
-    { label: 'Tue', aValue: 14 },
-    { label: 'Wed', aValue: 22 },
-    { label: 'Thu', aValue: 43 },
-    { label: 'Fri', aValue: 33 },
-    { label: 'Mon', aValue: 200 },
-    { label: 'Tue', aValue: 14 }
-  ];
 
   return (
     <div className="App">
-      <div className=' lg:flex  h-screen max-w-7xl mx-auto px-10'>
-        <div className=' lg:w-60 lg:h-full  flex justify-center items-center '>
+      <div className=' lg:flex  h-screen xl:max-w-7xl lg:w-full mx-auto px-10'>
+        <div className=' xl:w-60 lg:w-72 lg:h-full  flex justify-center items-center '>
           <Navbar></Navbar>
         </div>
-        <hr className=' h-[80vh] my-auto w-[1px] bg-teal-700' />
+        <hr className=' hidden lg:block lg:h-[80vh] h-[1px] my-auto lg:w-[1px] bg-teal-700 w-full' />
         <div className=' h-full w-full'>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -35,8 +26,8 @@ function App() {
             <Route path="/horizontalBarChart" element={<HorizontalBarChart />} />
             <Route path="/multipleBarChart" element={<MultipleBarChart />} />
             <Route path="/simpleLineChart" element={<SimpleLineChart />} />
+            <Route path="/dualLineChart" element={<SimpleLineChart2 />} />
             <Route path="/graphChart" element={<GraphChart />} />
-
           </Routes>
 
         </div>
