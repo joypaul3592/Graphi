@@ -3,7 +3,7 @@ import Geogebra from 'react-geogebra';
 import './GraphChart.css'
 const GraphChart = () => {
     return (
-        <div >
+        <div className='  h-full flex justify-center items-center'>
             <Geogebra />
         </div>
     );

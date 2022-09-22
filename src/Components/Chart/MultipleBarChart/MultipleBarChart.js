@@ -6,7 +6,7 @@ import 'chartjs-plugin-dragdata'
 export default function MultipleBarChart({ Data }) {
     const [Input_value, setInputValue] = useState()
     const [hander, handleChange] = useState()
-   
+
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -115,16 +115,16 @@ export default function MultipleBarChart({ Data }) {
 
     return (
         <div>
-           
-            {isLoaded &&
-                <Bar
-                    redraw={shouldRedraw}
-                    data={localOption.data}
-                    options={localOption.options}
-                    plugins={localOption.plugins}
-                />
-            }
-
+            <div className=' w-full bg-white mt-8 p-5 rounded-md shadow-md'>
+                {isLoaded &&
+                    <Bar
+                        redraw={shouldRedraw}
+                        data={localOption.data}
+                        options={localOption.options}
+                        plugins={localOption.plugins}
+                    />
+                }
+            </div>
         </div>
     );
 }
