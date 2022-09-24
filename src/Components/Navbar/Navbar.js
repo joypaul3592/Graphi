@@ -11,11 +11,11 @@ const Navbar = () => {
     const [menu, setMenu] = useState(false)
     const { pathname } = useLocation()
     return (
-        <div className=' flex justify-between items-center lg:flex-col h-full py-10 pb-12'>
-            <div className='lg:hidden bg-green-200 cursor-pointer hover:shadow-lg h-8 w-8 fixed right-5 top-5 rounded-md'>
+        <div className=' flex justify-between items-center lg:flex-col h-full lg:justify-center'>
+            <div className='lg:hidden cursor-pointer hover:shadow-lg h-8 w-8 fixed right-5 top-5 rounded-md '>
                 <HiMenuAlt2 className=' text-lg text-gray-800 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ' onClick={() => setMenu(!menu)} />
             </div>
-            <div className=' flex flex-col items-center'>
+            <div className=' flex flex-col items-center lg:mb-10'>
                 <SiGraphql className=' text-6xl text-teal-500' />
                 <h1 className=' text-xl font-semibold text-gray-800'>Gra<span className=' text-teal-500'>Phi</span></h1>
             </div>
@@ -87,7 +87,7 @@ const Navbar = () => {
                         to={'/graphChart'}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
-                        <div className='flex items-center  px-3 mb-8'>
+                        <div className='flex items-center  px-3 '>
                             <AiOutlineBorderlessTable className=' mr-3 text-teal-500' />
                             <p className=''>Graph Chart</p>
                         </div>
@@ -95,7 +95,7 @@ const Navbar = () => {
 
                 </div>
             </div>
-            <div className=' hidden lg:block'>
+            <div className=' hidden lg:block lg:mt-10'>
                 <img className=' w-24' src={joinUs} alt="joinUs" />
                 <h1 className=' font-medium '>Join with Us</h1>
             </div>

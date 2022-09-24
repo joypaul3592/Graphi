@@ -14,12 +14,12 @@ function App() {
 
   return (
     <div className="App">
-      <div className=' lg:flex  h-screen xl:max-w-7xl lg:w-full mx-auto px-10'>
-        <div className=' xl:w-60 lg:w-72 lg:h-full  flex justify-center items-center '>
+      <div className=' lg:flex  lg:h-screen xl:max-w-7xl lg:w-full mx-auto xl:px-10 lg:px-5'>
+        <div className='lg:w-[20%] lg:h-screen  flex justify-center items-center my-10 lg:my-0'>
           <Navbar></Navbar>
+          <hr className=' hidden lg:block lg:h-[80vh] h-[1px] my-auto lg:w-[1px] bg-teal-700 w-full' />
         </div>
-        <hr className=' hidden lg:block lg:h-[80vh] h-[1px] my-auto lg:w-[1px] bg-teal-700 w-full' />
-        <div className=' h-full w-full'>
+        <div className=' h-full lg:w-[77%] w-full '>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/singleBarChart" element={<SingleBarChart />} />
