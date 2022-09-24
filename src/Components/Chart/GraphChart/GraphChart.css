@@ -17,6 +17,9 @@ button.gwt-StackPanelItem {
 .gwt-MenuBar :nth-child(2){
     display: none !important;
 }
+.GeoGebraMenuBar :nth-child(6){
+    display: none !important;
+}
 .snackbarComponent{
     display: none !important;
 }
