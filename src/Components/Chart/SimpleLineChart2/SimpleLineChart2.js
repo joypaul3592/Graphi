@@ -3,9 +3,10 @@ import { Bar, Line } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
 import ReactToPrint from 'react-to-print';
 import '../../../App.css'
+import { BiCloudDownload } from "react-icons/bi";
 
 export default function SimpleLineChart2() {
-    const ref =useRef()
+    const ref = useRef()
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
 
@@ -161,7 +162,7 @@ export default function SimpleLineChart2() {
                             }
                         </div>
                     </div>
-                    <div  ref={ref}  className=' w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 rounded-md shadow-md'>
+                    <div ref={ref} className=' relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
                         {isLoaded &&
                             <Line
                                 redraw={shouldRedraw}
@@ -171,12 +172,16 @@ export default function SimpleLineChart2() {
                                 fillStyle='lightGreen'
                             />
                         }
+                        <div className=' absolute -top-10 right-2'>
+                            <ReactToPrint
+                                trigger={() => <button className='text-xl px-1 border-3 text-black font-bold rounded-md shadow-lg  my-10'><BiCloudDownload /></button>}
+                                content={() => ref.current}
+                            />
+                        </div>
                     </div>
+
                 </div>
-                <ReactToPrint
-                    trigger={() => <button className='text-xl bg-amber-200 border-3 text-black font-bold rounded-md shadow-lg px-8 py-2 my-10'>Save Pdf</button>}
-                    content={() => ref.current}
-                />
+
             </div>
 
         </div>
