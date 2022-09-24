@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Bar } from "react-chartjs-2";
+import ReactToPrint from 'react-to-print';
 import 'chartjs-plugin-dragdata'
-import { width } from '@mui/system';
 import '../../../App.css'
 
 export default function BarChart2() {
 
-
+    const ref = useRef();
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
 
@@ -198,7 +198,7 @@ export default function BarChart2() {
                             }
                         </div>
                     </div>
-                    <div className=' w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 rounded-md shadow-md'>
+                    <div ref={ref} className=' w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 rounded-md shadow-md'>
 
                         {isLoaded &&
                             <Bar
@@ -210,6 +210,14 @@ export default function BarChart2() {
                         }
                     </div>
                 </div>
+
+                {/* ============== i try to pdf save ============= */}
+                <ReactToPrint
+                    trigger={() => <button className='text-xl bg-amber-200 border-3 text-black font-bold rounded-md shadow-lg px-8 py-2 my-10'>Save Pdf</button>}
+                    content={() => ref.current}
+                />
+
+
             </div>
 
         </div>
