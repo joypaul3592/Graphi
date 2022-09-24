@@ -24,6 +24,8 @@ export default function BarChart2() {
 
         let options = {
             type: 'line',
+            exportEnabled: true,
+            theme: "light1",
             data: {
                 labels: labels,
                 datasets: [

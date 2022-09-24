@@ -12,7 +12,7 @@ const Navbar = () => {
     const { pathname } = useLocation()
     return (
         <div className=' flex justify-between items-center lg:flex-col h-full lg:justify-center'>
-            <div className='lg:hidden cursor-pointer hover:shadow-lg h-8 w-8 fixed right-5 top-5 rounded-md '>
+            <div className='lg:hidden cursor-pointer hover:shadow-lg h-8 w-8 fixed right-5 top-5 rounded-md z-[50000]'>
                 <HiMenuAlt2 className=' text-lg text-gray-800 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ' onClick={() => setMenu(!menu)} />
             </div>
             <div className=' flex flex-col items-center lg:mb-10'>
