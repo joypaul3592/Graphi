@@ -22,7 +22,7 @@ export default function MultipleBarChart() {
                 labels: labels,
                 datasets: [
                     {
-                        label: '# of Pears',
+                        label: 'Graph 1',
                         data: data?.map(c => c.yValue),
                         fill: true,
                         tension: 0.4,
@@ -32,7 +32,7 @@ export default function MultipleBarChart() {
                         pointHitRadius: 25
                     },
                     {
-                        label: '# of Apples',
+                        label: 'Graph 2',
                         data: data?.map(c => c.xValue),
                         fill: true,
                         tension: 0.4,

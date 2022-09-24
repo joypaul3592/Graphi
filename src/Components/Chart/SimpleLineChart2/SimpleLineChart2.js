@@ -19,7 +19,7 @@ export default function SimpleLineChart2() {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: '# Votes',
+                    label: 'Graph',
                     data: data?.map(c => c.yValue),
                     // borderColor: 'rgb(75, 192, 192)',
                     fill: true,

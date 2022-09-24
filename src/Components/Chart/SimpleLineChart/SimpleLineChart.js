@@ -20,7 +20,7 @@ export default function SimpleLineChart(props) {
                 labels: labels,
                 borderColor: "#fffff",
                 datasets: [{
-                    label: 'A',
+                    label: 'Graph',
                     yAxisID: 'y',
                     borderColor: 'rgb(75, 192, 192)',
                     data: data?.map(c => c.yValue),
