@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Bar } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
 import ReactToPrint from 'react-to-print';
-
+import '../../../App.css'
 
 export default function MultipleBarChart() {
     const ref =useRef()
@@ -23,7 +23,7 @@ export default function MultipleBarChart() {
                 labels: labels,
                 datasets: [
                     {
-                        label: '# of Pears',
+                        label: 'Graph 1',
                         data: data?.map(c => c.yValue),
                         fill: true,
                         tension: 0.4,
@@ -33,7 +33,7 @@ export default function MultipleBarChart() {
                         pointHitRadius: 25
                     },
                     {
-                        label: '# of Apples',
+                        label: 'Graph 2',
                         data: data?.map(c => c.xValue),
                         fill: true,
                         tension: 0.4,
@@ -165,8 +165,8 @@ export default function MultipleBarChart() {
             <div className='   mx-10 w-10/12 '>
 
                 <div className=' w-full'>
-                    <div className=' flex items-center justify-between gap-6'>
-                        <div className=' flex flex-col w-[50%] p-5 bg-white rounded-md shadow-md xl:px-10'>
+                    <div className=' md:flex items-center justify-between gap-6'>
+                        <div className='flex flex-col w-full my-10 md:my-0 md:w-[50%] p-5 rounded-md shadow-md xl:px-10'>
                             <h1 className=' text-purple-800 font-semibold '>Add Your Graph</h1>
                             <hr className='mb-4 mt-1 bg-purple-800 h-[1.5px] w-1/2 flex mx-auto' />
                             <input onBlur={(e) => setlabel(e.target.value)} type="text" placeholder='Names' className='bg-gray-100 px-3 py-1 rounded shadow-md' />
@@ -177,7 +177,7 @@ export default function MultipleBarChart() {
                             <button onClick={() => submitPost(label, yValue,xValue)} type="button" class="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
                         </div>
                         {/* ============ ============= */}
-                        <div className=' bg-white w-[50%] h-[13rem] rounded-md shadow-md overflow-auto py-5 px-5'>
+                        <div className=' bg-white w-full md:w-[50%]  h-[13rem] rounded-md shadow-md overflow-auto scroll py-5 px-5'>
                             {
                                 Data.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data._id}>
                                     <p className=' font-medium'>{data.label}</p>
@@ -188,7 +188,7 @@ export default function MultipleBarChart() {
                             }
                         </div>
                     </div>
-                    <div ref={ref} className=' w-full bg-white mt-8 p-5 rounded-md shadow-md'>
+                    <div  ref={ref}  className='w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 rounded-md shadow-md'>
                         {isLoaded &&
                             <Bar
                                 redraw={shouldRedraw}

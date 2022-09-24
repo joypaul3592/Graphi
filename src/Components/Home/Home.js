@@ -12,12 +12,12 @@ import HomeBarChart from '../Chart/HomeBarChart/HomeBarChart';
 
 const Home = () => {
     return (
-        <div className='h-full flex w-full justify-center items-center  '>
-            <div className='  w-full pl-10'>
+        <div className=' h-full  flex w-full justify-center items-center'>
+            <div className=' w-full lg:pl-10 px-5'>
                 <div className=' flex w-full justify-between items-center '>
-                    <div className='relative ml-10'>
-                        <img className=' w-16 absolute -top-4 -left-10 ' src={flower} alt="flower" />
-                        <h1 className=' text-2xl font-medium'>WellCome Home</h1>
+                    <div className='relative md:ml-10 ml-5'>
+                        <img className=' md:w-16 w-10 absolute -top-4 -left-10 ' src={flower} alt="flower" />
+                        <h1 className=' md:text-2xl text-md font-medium'>WellCome Home</h1>
                     </div>
                     <div className=' flex items-center'>
                         <div className=' bg-red-100 hover:bg-opacity-50 hover:shadow-md cursor-pointer p-2 rounded-md mr-5'>
@@ -31,7 +31,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className=' mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-between gap-4'>
+                <div className=' w-full mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-between gap-4'>
                     <div className=' bg-purple-800 hover:shadow-lg cursor-pointer relative  py-8 rounded-md overflow-hidden '>
                         <FaUsers className=' mx-auto text-5xl text-yellow-400' />
                         <h1 className=' text-white text-5xl'>2058</h1>
