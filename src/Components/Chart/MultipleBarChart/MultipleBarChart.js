@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Bar } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
-
+import '../../../App.css'
 
 export default function MultipleBarChart() {
 
@@ -175,7 +175,7 @@ export default function MultipleBarChart() {
                             <button onClick={() => submitPost(label, yValue)} type="button" class="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
                         </div>
                         {/* ============ ============= */}
-                        <div className=' bg-white w-full md:w-[50%]  h-[13rem] rounded-md shadow-md overflow-auto py-5 px-5'>
+                        <div className=' bg-white w-full md:w-[50%]  h-[13rem] rounded-md shadow-md overflow-auto scroll py-5 px-5'>
                             {
                                 Data.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data._id}>
                                     <p className=' font-medium'>{data.label}</p>
