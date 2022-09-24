@@ -11,7 +11,6 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
 
-
   return (
     <div className="App">
       <div className=' lg:flex  lg:h-screen xl:max-w-7xl lg:w-full mx-auto xl:px-10 lg:px-5'>

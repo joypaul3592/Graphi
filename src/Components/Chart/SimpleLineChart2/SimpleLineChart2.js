@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Bar, Line } from "react-chartjs-2";
 import 'chartjs-plugin-dragdata'
+import ReactToPrint from 'react-to-print';
 import '../../../App.css'
 
 export default function SimpleLineChart2() {
+    const ref =useRef()
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
 
@@ -159,7 +161,7 @@ export default function SimpleLineChart2() {
                             }
                         </div>
                     </div>
-                    <div className=' w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 rounded-md shadow-md'>
+                    <div  ref={ref}  className=' w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 rounded-md shadow-md'>
                         {isLoaded &&
                             <Line
                                 redraw={shouldRedraw}
@@ -171,6 +173,10 @@ export default function SimpleLineChart2() {
                         }
                     </div>
                 </div>
+                <ReactToPrint
+                    trigger={() => <button className='text-xl bg-amber-200 border-3 text-black font-bold rounded-md shadow-lg px-8 py-2 my-10'>Save Pdf</button>}
+                    content={() => ref.current}
+                />
             </div>
 
         </div>
