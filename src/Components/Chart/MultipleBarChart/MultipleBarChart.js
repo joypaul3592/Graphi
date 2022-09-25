@@ -141,7 +141,10 @@ export default function MultipleBarChart() {
     const [label, setlabel] = useState('')
     const [yValue, setaValue] = useState(0)
     const [xValue, setxValue] = useState(0)
-    const submitPost = (label, yValue, xValue) => {
+    const submitPost = (e) => {
+        const label = e.target.names.value;
+        const yValue = e.target.number.value;
+        const xValue = e.target.number2.value;
         if (label && yValue && xValue) {
             const Data = { label: label, yValue: yValue, xValue: xValue }
             fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/multipleBar', {
@@ -155,6 +158,9 @@ export default function MultipleBarChart() {
                 .then((data) => {
                     if (data) {
                         setdataisLoaded(!dataisLoaded)
+                        e.target.names.value = ''
+                        e.target.number.value = ''
+                        e.target.number2.value = ''
                     }
                 })
 
@@ -170,12 +176,14 @@ export default function MultipleBarChart() {
                         <div className='flex flex-col w-full my-10 md:my-0 md:w-[50%] p-5 rounded-md shadow-md xl:px-10'>
                             <h1 className=' text-purple-800 font-semibold '>Add Your Graph</h1>
                             <hr className='mb-4 mt-1 bg-purple-800 h-[1.5px] w-1/2 flex mx-auto' />
-                            <input onBlur={(e) => setlabel(e.target.value)} type="text" placeholder='Names' className='bg-gray-100 px-3 py-1 rounded shadow-md' />
+                            <form onSubmit={submitPost} className='flex flex-col'>
+                                <input type="text" placeholder='Names' name='names' className='bg-gray-100 px-3 py-1 rounded shadow-md' />
 
-                            <input onBlur={(e) => setaValue(e.target.value)} type="number" placeholder='Number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />
-                            <input onBlur={(e) => setxValue(e.target.value)} type="number" placeholder='Number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />
+                                <input type="number" placeholder='Number' name='number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />
+                                <input type="number" placeholder='Number' name='number2' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />
 
-                            <button onClick={() => submitPost(label, yValue, xValue)} type="button" class="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
+                                <button type="submit" class="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
+                            </form>
                         </div>
                         {/* ============ ============= */}
                         <div className=' bg-white w-full md:w-[50%]  h-[13rem] rounded-md shadow-md overflow-auto scroll py-5 px-5'>
