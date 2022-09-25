@@ -25,10 +25,10 @@ export default function HomeBarChart() {
         let options = {
             type: 'line',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
                 datasets: [
                     {
-                        data: [65, 59, 80, 81, 56, 55, 40, 78, 45, 66, 83, 62],
+                        data: [65, 59, 80, 81, 56, 55, 40, 78, 45],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(255, 159, 64, 0.2)',
@@ -178,22 +178,11 @@ export default function HomeBarChart() {
     return (
         <div>
             {/* ============ ============= */}
-            <div className='grid grid-cols-3'>
-                {
-                    Data.map(data => <div key={data._id}>
-                        <div className='flex gap-10'>
-                            <p>{data.label}</p>
-                            <p>{data.yValue}</p>
-                            <p onClick={() => setDelete(data._id)} className='text-red-500 cursor-pointer border-2 bg-black'>X</p>
-                        </div>
-                    </div>)
-                }
-            </div>
 
             {isLoaded &&
                 <Bar
 
-                    className=' w-full h-80'
+                    className=' w-2/3 h-80 '
                     redraw={shouldRedraw}
                     data={localOption.data}
                     options={localOption.options}

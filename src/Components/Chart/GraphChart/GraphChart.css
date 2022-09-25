@@ -5,3 +5,21 @@ button.gwt-StackPanelItem {
 .ggbtoolbarpanel.smart-nb-draggable.toolbarPanelNorth.toolbarPanel {
     background-color: rgba(255, 200, 0, 0.337);
 }
+.rightButtonPanel :nth-child(3){
+    display: none;
+} 
+.gwt-StackPanelContent :nth-child(2){
+    display: none !important;
+}
+.gwt-StackPanelContent :nth-child(3){
+    display: none !important;
+}
+.gwt-MenuBar :nth-child(2){
+    display: none !important;
+}
+.GeoGebraMenuBar :nth-child(6){
+    display: none !important;
+}
+.snackbarComponent{
+    display: none !important;
+}
