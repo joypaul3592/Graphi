@@ -164,6 +164,7 @@ export default function BarChart2() {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data) {
+                        
                         setdataisLoaded(!dataisLoaded)
                     }
                 })
