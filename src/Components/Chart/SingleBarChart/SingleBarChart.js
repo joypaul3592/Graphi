@@ -4,13 +4,27 @@ import ReactToPrint from 'react-to-print';
 import 'chartjs-plugin-dragdata'
 import '../../../App.css'
 import { BiCloudDownload } from "react-icons/bi";
+import { data } from 'autoprefixer';
 
 export default function BarChart2() {
 
     const ref = useRef();
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    /* ===================== Data grt =========  */
+    useEffect(() => {
+        fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setData(data?.data)
+            })
 
+    }, [dataisLoaded])
 
 
     const [shouldRedraw] = useState(false);
@@ -18,10 +32,9 @@ export default function BarChart2() {
 
 
 
-    const buildDataSet = (data) => {
+    const buildDataSet = ({ datas }) => {
 
-
-        let labels = data?.map(c => c.label);
+        let labels = datas?.map(c => c.label);
 
         let options = {
             type: 'line',
@@ -32,7 +45,7 @@ export default function BarChart2() {
                 datasets: [
                     {
                         label: 'Graph',
-                        data: data?.map(c => c?.yValue),
+                        data: datas?.map(c => c?.yValue),
                         fill: true,
                         tension: 0.4,
                         borderWidth: 1,
@@ -79,22 +92,26 @@ export default function BarChart2() {
                         },
                         // Change while dragging 
                         onDrag: function (e, datasetIndex, index, value) {
+
+
                             e.target.style.cursor = 'grabbing'
                         },
                         // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
 
-                            e.target.style.cursor = 'default'
+                            UpdateValue(value, index)
+                            // setupdatevalueNumber(value, index)
 
+                            e.target.style.cursor = 'default'
                             if (datasetIndex == 0) {
                                 data[index].yValue = value
                             }
 
                             if (datasetIndex == 1) {
-                                data[index].bValue = value
+                                data[index].xValue = value
                             }
 
-                            Data.onHandleChange(data);
+                            data.onHandleChange(data);
                         },
                     }
                 }
@@ -105,7 +122,7 @@ export default function BarChart2() {
     }
 
 
-    let localOption = buildDataSet(Data);
+
 
     useEffect(() => {
         setTimeout(() => {
@@ -113,20 +130,6 @@ export default function BarChart2() {
         }, 200);
     }, [])
 
-    /* ===================== Data grt =========  */
-    useEffect(() => {
-        fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setData(data?.data)
-            })
-
-    }, [dataisLoaded])
 
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()
@@ -174,8 +177,25 @@ export default function BarChart2() {
         }
     }
 
+    let localOption = buildDataSet({ datas: Data });
+
+    const UpdateValue = (value, index) => {
+        fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar/${index}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ value: value }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data) {
+                    console.log(data)
+                }
+            })
 
 
+    }
 
     return (
         <div className=' h-full flex justify-center items-center'>
