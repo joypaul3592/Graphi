@@ -10,6 +10,9 @@ export default function SimpleLineChart() {
 
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    const [back, setback] = useState({})
+
+
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -69,6 +72,20 @@ export default function SimpleLineChart() {
                             // console.log(e, datasetIndex, index, value)
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
+                            fetch(`http://localhost:5000/api/v1/grap/simpleLine/${index}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ value: value }),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data) {
+                                        console.log(data)
+                                        setback({ index, value })
+                                    }
+                                })
                             e.target.style.cursor = 'default'
                             // console.log(datasetIndex, index, value)
                         },
@@ -101,7 +118,7 @@ export default function SimpleLineChart() {
                 setData(data?.data)
             })
 
-    }, [dataisLoaded])
+    }, [dataisLoaded,back.index])
 
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()

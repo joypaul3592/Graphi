@@ -9,6 +9,8 @@ export default function SimpleLineChart2() {
     const ref = useRef()
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    const [back, setback] = useState({})
+
 
 
 
@@ -57,6 +59,20 @@ export default function SimpleLineChart2() {
                             // console.log(e, datasetIndex, index, value)
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
+                            fetch(`http://localhost:5000/api/v1/grap/dualLine/${index}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ value: value }),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data) {
+                                        console.log(data)
+                                        setback({ index, value })
+                                    }
+                                })
                             e.target.style.cursor = 'default'
                             // console.log(datasetIndex, index, value)
                         },
@@ -90,7 +106,7 @@ export default function SimpleLineChart2() {
                 setData(data?.data)
             })
 
-    }, [dataisLoaded])
+    }, [dataisLoaded, back.index])
 
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()
@@ -138,7 +154,23 @@ export default function SimpleLineChart2() {
         }
 
     }
+    // const UpdateValue = (value, index) => {
+    //     fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/dualLine/${index}`, {
+    //         method: 'PATCH',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ value: value }),
+    //     })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             if (data) {
+    //                 setupdateNumber(true)
+    //             }
+    //         })
 
+
+    // }
     return (
         <div className=' h-full flex justify-center items-center'>
             <div className='   mx-10 w-10/12 '>

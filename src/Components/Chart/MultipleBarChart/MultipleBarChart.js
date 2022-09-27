@@ -9,6 +9,9 @@ export default function MultipleBarChart() {
     const ref = useRef()
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    const [back, setback] = useState({})
+
+
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -71,18 +74,23 @@ export default function MultipleBarChart() {
                         },
                         // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
-                            // console.log('On Drag End ', datasetIndex, index, value)
-                            e.target.style.cursor = 'default'
+                            console.log(e, datasetIndex, index, value)
+                            fetch(`http://localhost:5000/api/v1/grap/multipleBar/${index}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ value: value, datasetIndex:datasetIndex}),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data) {
+                                        console.log(data)
+                                        setback({ datasetIndex, value })
+                                    }
+                                })
 
-                            if (datasetIndex == 0) {
-                                data[index].aValue = value
-                            }
 
-                            if (datasetIndex == 1) {
-                                data[index].bValue = value
-                            }
-
-                            Data.onHandleChange(data);
                         },
                     }
                 }
@@ -115,7 +123,7 @@ export default function MultipleBarChart() {
                 setData(data?.data)
             })
 
-    }, [dataisLoaded])
+    }, [dataisLoaded, back.datasetIndex])
 
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()
@@ -138,13 +146,11 @@ export default function MultipleBarChart() {
 
 
     /* ===================== Data Post =========  */
-    const [label, setlabel] = useState('')
-    const [yValue, setaValue] = useState(0)
-    const [xValue, setxValue] = useState(0)
-    const submitPost = (e) => {
-        const label = e.target.names.value;
-        const yValue = e.target.number.value;
-        const xValue = e.target.number2.value;
+
+    const SubmitPost = (event) => {
+        const label = event.target.names.value;
+        const yValue = event.target.number.value;
+        const xValue = event.target.number2.value;
         if (label && yValue && xValue) {
             const Data = { label: label, yValue: yValue, xValue: xValue }
             fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/multipleBar', {
@@ -158,15 +164,15 @@ export default function MultipleBarChart() {
                 .then((data) => {
                     if (data) {
                         setdataisLoaded(!dataisLoaded)
-                        e.target.names.value = ''
-                        e.target.number.value = ''
-                        e.target.number2.value = ''
+                        event.target.names.value = ''
+                        event.target.number.value = ''
+                            .target.number2.value = ''
                     }
                 })
 
         }
+        event.preventdefault()
     }
-
     return (
         <div className=' h-full flex justify-center items-center'>
             <div className='   mx-10 w-10/12 '>
@@ -176,7 +182,7 @@ export default function MultipleBarChart() {
                         <div className='flex flex-col w-full my-10 md:my-0 md:w-[50%] p-5 rounded-md shadow-md xl:px-10'>
                             <h1 className=' text-purple-800 font-semibold '>Add Your Graph</h1>
                             <hr className='mb-4 mt-1 bg-purple-800 h-[1.5px] w-1/2 flex mx-auto' />
-                            <form onSubmit={submitPost} className='flex flex-col'>
+                            <form onClick={() => SubmitPost()} className='flex flex-col'>
                                 <input type="text" placeholder='Names' name='names' className='bg-gray-100 px-3 py-1 rounded shadow-md' />
 
                                 <input type="number" placeholder='Number' name='number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />

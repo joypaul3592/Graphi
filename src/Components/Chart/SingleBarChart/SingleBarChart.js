@@ -4,14 +4,16 @@ import ReactToPrint from 'react-to-print';
 import 'chartjs-plugin-dragdata'
 import '../../../App.css'
 import { BiCloudDownload } from "react-icons/bi";
-import { data } from 'autoprefixer';
 
 export default function BarChart2() {
 
     const ref = useRef();
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    const [back, setback] = useState({})
+
     /* ===================== Data grt =========  */
+
     useEffect(() => {
         fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar', {
             method: 'GET',
@@ -24,7 +26,8 @@ export default function BarChart2() {
                 setData(data?.data)
             })
 
-    }, [dataisLoaded])
+    }, [dataisLoaded, back.index])
+
 
 
     const [shouldRedraw] = useState(false);
@@ -99,19 +102,24 @@ export default function BarChart2() {
                         // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
 
-                            UpdateValue(value, index)
-                            // setupdatevalueNumber(value, index)
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar/${index}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ value: value }),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data) {
+                                        setback({ index, value })
+                                    }
+                                })
+
 
                             e.target.style.cursor = 'default'
-                            if (datasetIndex == 0) {
-                                data[index].yValue = value
-                            }
 
-                            if (datasetIndex == 1) {
-                                data[index].xValue = value
-                            }
 
-                            data.onHandleChange(data);
                         },
                     }
                 }
@@ -120,7 +128,7 @@ export default function BarChart2() {
 
         return options;
     }
-
+    let localOption = buildDataSet({ datas: Data });
 
 
 
@@ -129,6 +137,8 @@ export default function BarChart2() {
             setIsLoaded(true)
         }, 200);
     }, [])
+
+
 
 
     /* ===================== Data Delete =========  */
@@ -177,25 +187,11 @@ export default function BarChart2() {
         }
     }
 
-    let localOption = buildDataSet({ datas: Data });
-
-    const UpdateValue = (value, index) => {
-        fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar/${index}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ value: value }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data) {
-                    console.log(data)
-                }
-            })
 
 
-    }
+
+
+
 
     return (
         <div className=' h-full flex justify-center items-center'>
@@ -211,7 +207,7 @@ export default function BarChart2() {
 
                                 <input type="number" placeholder='Number' name='number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />
 
-                                <button type="submit" class="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
+                                <button type="submit" className="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
                             </form>
                         </div>
                         {/* ============ ============= */}
@@ -220,6 +216,7 @@ export default function BarChart2() {
                                 Data.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data._id}>
                                     <p className=' font-medium'>{data.label}</p>
                                     <p>{data.yValue}</p>
+
                                     <p onClick={() => setDelete(data._id)} className='text-white cursor-pointer px-[6px] border-2 bg-red-400 rounded'>X</p>
 
                                 </div>)
