@@ -77,8 +77,7 @@ export default function BarChart2() {
             options: {
                 scales: {
                     y: {
-                        min: 0,
-                        max: 200
+                        min: 0
                     }
                 },
                 onHover: function (e) {

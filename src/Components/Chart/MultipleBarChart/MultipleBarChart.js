@@ -51,8 +51,7 @@ export default function MultipleBarChart() {
             options: {
                 scales: {
                     y: {
-                        min: 0,
-                        max: 200
+                        min: 0
                     }
                 },
                 onHover: function (e) {
@@ -74,7 +73,7 @@ export default function MultipleBarChart() {
                         },
                         // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
-                            fetch(`http://localhost:5000/api/v1/grap/multipleBar/${index}`, {
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/multipleBar/${index}`, {
                                 method: 'PATCH',
                                 headers: {
                                     'Content-Type': 'application/json',

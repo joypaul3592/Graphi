@@ -40,13 +40,11 @@ export default function SimpleLineChart() {
                     y: {
                         type: 'linear',
                         position: 'left',
-                        max: 100,
                         min: 0
                     },
                     y2: {
                         type: 'linear',
                         position: 'right',
-                        max: 1,
                         min: 0
                     }
                 },
@@ -74,7 +72,7 @@ export default function SimpleLineChart() {
 
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
-                            fetch(`http://localhost:5000/api/v1/grap/simpleLine/${index}`, {
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/simpleLine/${index}`, {
                                 method: 'PATCH',
                                 headers: {
                                     'Content-Type': 'application/json',

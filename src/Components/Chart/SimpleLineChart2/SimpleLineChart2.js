@@ -40,7 +40,7 @@ export default function SimpleLineChart2() {
                 scales: {
                     y: {
                         min: 0,
-                        max: 20
+                       
                     }
                 },
                 onHover: function (e) {
@@ -61,7 +61,7 @@ export default function SimpleLineChart2() {
                             // console.log(e, datasetIndex, index, value)
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
-                            fetch(`http://localhost:5000/api/v1/grap/dualLine/${index}`, {
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/dualLine/${index}`, {
                                 method: 'PATCH',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -76,7 +76,6 @@ export default function SimpleLineChart2() {
                                     }
                                 })
                             e.target.style.cursor = 'default'
-                            // console.log(datasetIndex, index, value)
                         }
 
                     }
@@ -159,23 +158,6 @@ export default function SimpleLineChart2() {
         }
 
     }
-    // const UpdateValue = (value, index) => {
-    //     fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/dualLine/${index}`, {
-    //         method: 'PATCH',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ value: value }),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             if (data) {
-    //                 setupdateNumber(true)
-    //             }
-    //         })
-
-
-    // }
     return (
         <div className=' h-full flex justify-center items-center'>
             <div className='   mx-10 w-10/12 '>

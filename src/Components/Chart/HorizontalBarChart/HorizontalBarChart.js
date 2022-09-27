@@ -51,7 +51,7 @@ export default function HorizentalBar() {
                             // console.log(e, datasetIndex, index, value)
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
-                            fetch(`http://localhost:5000/api/v1/grap/horizentalBar/${index}`, {
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/horizentalBar/${index}`, {
                                 method: 'PATCH',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -73,7 +73,6 @@ export default function HorizentalBar() {
                 },
                 scales: {
                     x: {
-                        max: 100,
                         min: 0
                     }
                 }
