@@ -9,6 +9,8 @@ export default function HorizentalBar() {
     const ref = useRef()
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    const [back, setback] = useState({})
+
 
 
 
@@ -49,14 +51,28 @@ export default function HorizentalBar() {
                             // console.log(e, datasetIndex, index, value)
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/horizentalBar/${index}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ value: value }),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data) {
+                                        console.log(data)
+                                        setback({ index, value })
+                                    }
+                                })
+
                             e.target.style.cursor = 'default'
-                            // console.log(datasetIndex, index, value)
+
                         },
                     }
                 },
                 scales: {
                     x: {
-                        max: 100,
                         min: 0
                     }
                 }
@@ -92,7 +108,7 @@ export default function HorizentalBar() {
                 setData(data?.data)
             })
 
-    }, [dataisLoaded])
+    }, [dataisLoaded, back.index])
 
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()
@@ -139,7 +155,6 @@ export default function HorizentalBar() {
 
         }
     }
-
 
 
     return (

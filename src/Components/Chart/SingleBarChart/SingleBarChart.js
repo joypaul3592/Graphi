@@ -10,6 +10,23 @@ export default function BarChart2() {
     const ref = useRef();
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    const [back, setback] = useState({})
+
+    /* ===================== Data grt =========  */
+
+    useEffect(() => {
+        fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setData(data?.data)
+            })
+
+    }, [dataisLoaded, back.index])
 
 
 
@@ -18,10 +35,9 @@ export default function BarChart2() {
 
 
 
-    const buildDataSet = (data) => {
+    const buildDataSet = ({ datas }) => {
 
-
-        let labels = data?.map(c => c.label);
+        let labels = datas?.map(c => c.label);
 
         let options = {
             type: 'line',
@@ -32,7 +48,7 @@ export default function BarChart2() {
                 datasets: [
                     {
                         label: 'Graph',
-                        data: data?.map(c => c?.yValue),
+                        data: datas?.map(c => c?.yValue),
                         fill: true,
                         tension: 0.4,
                         borderWidth: 1,
@@ -61,8 +77,7 @@ export default function BarChart2() {
             options: {
                 scales: {
                     y: {
-                        min: 0,
-                        max: 200
+                        min: 0
                     }
                 },
                 onHover: function (e) {
@@ -79,22 +94,31 @@ export default function BarChart2() {
                         },
                         // Change while dragging 
                         onDrag: function (e, datasetIndex, index, value) {
+
+
                             e.target.style.cursor = 'grabbing'
                         },
                         // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
 
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar/${index}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ value: value }),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data) {
+                                        setback({ index, value })
+                                    }
+                                })
+
+
                             e.target.style.cursor = 'default'
 
-                            if (datasetIndex == 0) {
-                                data[index].yValue = value
-                            }
 
-                            if (datasetIndex == 1) {
-                                data[index].bValue = value
-                            }
-
-                            Data.onHandleChange(data);
                         },
                     }
                 }
@@ -103,9 +127,9 @@ export default function BarChart2() {
 
         return options;
     }
+    let localOption = buildDataSet({ datas: Data });
 
 
-    let localOption = buildDataSet(Data);
 
     useEffect(() => {
         setTimeout(() => {
@@ -113,20 +137,8 @@ export default function BarChart2() {
         }, 200);
     }, [])
 
-    /* ===================== Data grt =========  */
-    useEffect(() => {
-        fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setData(data?.data)
-            })
 
-    }, [dataisLoaded])
+
 
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()
@@ -177,6 +189,9 @@ export default function BarChart2() {
 
 
 
+
+
+
     return (
         <div className=' h-full flex justify-center items-center'>
             <div className='   mx-10 w-10/12 '>
@@ -191,7 +206,7 @@ export default function BarChart2() {
 
                                 <input type="number" placeholder='Number' name='number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />
 
-                                <button type="submit" class="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
+                                <button type="submit" className="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
                             </form>
                         </div>
                         {/* ============ ============= */}
@@ -200,6 +215,7 @@ export default function BarChart2() {
                                 Data.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data._id}>
                                     <p className=' font-medium'>{data.label}</p>
                                     <p>{data.yValue}</p>
+
                                     <p onClick={() => setDelete(data._id)} className='text-white cursor-pointer px-[6px] border-2 bg-red-400 rounded'>X</p>
 
                                 </div>)

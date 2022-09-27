@@ -9,6 +9,8 @@ export default function SimpleLineChart2() {
     const ref = useRef()
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    const [back, setback] = useState({})
+
 
 
 
@@ -17,6 +19,7 @@ export default function SimpleLineChart2() {
 
 
     const buildDataSet = (data) => {
+        // console.log(data, value, index)
         let labels = data?.map(c => c.label);
         var options = {
             type: 'line',
@@ -37,7 +40,7 @@ export default function SimpleLineChart2() {
                 scales: {
                     y: {
                         min: 0,
-                        max: 20
+                       
                     }
                 },
                 onHover: function (e) {
@@ -45,6 +48,7 @@ export default function SimpleLineChart2() {
                     if (point.length) e.native.target.style.cursor = 'grab'
                     else e.native.target.style.cursor = 'default'
                 },
+
                 plugins: {
                     dragData: {
                         round: 1,
@@ -57,13 +61,29 @@ export default function SimpleLineChart2() {
                             // console.log(e, datasetIndex, index, value)
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/dualLine/${index}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ value: value }),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data) {
+                                        console.log(data)
+                                        setback({ index, value })
+                                    }
+                                })
                             e.target.style.cursor = 'default'
-                            // console.log(datasetIndex, index, value)
-                        },
+                        }
+
                     }
                 }
             }
         }
+
+
         return options;
     }
 
@@ -90,7 +110,7 @@ export default function SimpleLineChart2() {
                 setData(data?.data)
             })
 
-    }, [dataisLoaded])
+    }, [dataisLoaded, back.index])
 
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()
@@ -138,7 +158,6 @@ export default function SimpleLineChart2() {
         }
 
     }
-
     return (
         <div className=' h-full flex justify-center items-center'>
             <div className='   mx-10 w-10/12 '>

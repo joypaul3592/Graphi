@@ -9,6 +9,9 @@ export default function MultipleBarChart() {
     const ref = useRef()
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    const [back, setback] = useState({})
+
+
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -48,8 +51,7 @@ export default function MultipleBarChart() {
             options: {
                 scales: {
                     y: {
-                        min: 0,
-                        max: 200
+                        min: 0
                     }
                 },
                 onHover: function (e) {
@@ -71,18 +73,22 @@ export default function MultipleBarChart() {
                         },
                         // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
-                            // console.log('On Drag End ', datasetIndex, index, value)
-                            e.target.style.cursor = 'default'
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/multipleBar/${index}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ value: value, datasetIndex:datasetIndex}),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data) {
+                                        console.log(data)
+                                        setback({ datasetIndex, value })
+                                    }
+                                })
 
-                            if (datasetIndex == 0) {
-                                data[index].aValue = value
-                            }
 
-                            if (datasetIndex == 1) {
-                                data[index].bValue = value
-                            }
-
-                            Data.onHandleChange(data);
                         },
                     }
                 }
@@ -115,7 +121,7 @@ export default function MultipleBarChart() {
                 setData(data?.data)
             })
 
-    }, [dataisLoaded])
+    }, [dataisLoaded, back.datasetIndex])
 
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()
@@ -138,13 +144,11 @@ export default function MultipleBarChart() {
 
 
     /* ===================== Data Post =========  */
-    const [label, setlabel] = useState('')
-    const [yValue, setaValue] = useState(0)
-    const [xValue, setxValue] = useState(0)
-    const submitPost = (e) => {
-        const label = e.target.names.value;
-        const yValue = e.target.number.value;
-        const xValue = e.target.number2.value;
+
+    const submitPost = (event) => {
+        const label = event.target.names.value;
+        const yValue = event.target.number.value;
+        const xValue = event.target.number2.value;
         if (label && yValue && xValue) {
             const Data = { label: label, yValue: yValue, xValue: xValue }
             fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/multipleBar', {
@@ -158,15 +162,15 @@ export default function MultipleBarChart() {
                 .then((data) => {
                     if (data) {
                         setdataisLoaded(!dataisLoaded)
-                        e.target.names.value = ''
-                        e.target.number.value = ''
-                        e.target.number2.value = ''
+                        event.target.names.value = ''
+                        event.target.number.value = ''
+                        event.target.number2.value = ''
                     }
                 })
 
         }
+        event.preventDefault()
     }
-
     return (
         <div className=' h-full flex justify-center items-center'>
             <div className='   mx-10 w-10/12 '>

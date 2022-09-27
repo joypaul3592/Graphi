@@ -10,10 +10,14 @@ export default function SimpleLineChart() {
 
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
+    const [back, setback] = useState({})
+
+
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-
+    const [value, setValue] = useState(0)
+    const [index, setIndex] = useState(0)
 
     const buildDataSet = (data) => {
         let labels = data?.map(c => c.label);
@@ -36,13 +40,11 @@ export default function SimpleLineChart() {
                     y: {
                         type: 'linear',
                         position: 'left',
-                        max: 100,
                         min: 0
                     },
                     y2: {
                         type: 'linear',
                         position: 'right',
-                        max: 1,
                         min: 0
                     }
                 },
@@ -67,10 +69,26 @@ export default function SimpleLineChart() {
                         onDrag: function (e, datasetIndex, index, value) {
                             e.target.style.cursor = 'grabbing'
                             // console.log(e, datasetIndex, index, value)
+
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
+                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/simpleLine/${index}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ value: value }),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data) {
+                                        console.log(data)
+                                        setback({ index, value })
+                                    }
+                                })
                             e.target.style.cursor = 'default'
                             // console.log(datasetIndex, index, value)
+
                         },
                     }
                 }
@@ -101,7 +119,7 @@ export default function SimpleLineChart() {
                 setData(data?.data)
             })
 
-    }, [dataisLoaded])
+    }, [dataisLoaded,back.index])
 
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()
