@@ -9,7 +9,8 @@ export default function SimpleLineChart2() {
     const ref = useRef()
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
-
+    const [value, setValue] = useState(0)
+    const [index, setIndex] = useState(0)
 
 
     const [shouldRedraw] = useState(false);
@@ -17,6 +18,7 @@ export default function SimpleLineChart2() {
 
 
     const buildDataSet = (data) => {
+        // console.log(data, value, index)
         let labels = data?.map(c => c.label);
         var options = {
             type: 'line',
@@ -45,6 +47,7 @@ export default function SimpleLineChart2() {
                     if (point.length) e.native.target.style.cursor = 'grab'
                     else e.native.target.style.cursor = 'default'
                 },
+
                 plugins: {
                     dragData: {
                         round: 1,
@@ -54,21 +57,26 @@ export default function SimpleLineChart2() {
                         },
                         onDrag: function (e, datasetIndex, index, value) {
                             e.target.style.cursor = 'grabbing'
-                            // console.log(e, datasetIndex, index, value)
+                            // console.log(e, datasetIndex, index, data, value)
                         },
-                        onDragEnd: function (e, datasetIndex, index, value) {
-                            e.target.style.cursor = 'default'
-                            // console.log(datasetIndex, index, value)
-                        },
+                        onDragEnd: function (e, datasetIndex, index, value, data) {
+
+                            e.target.style.cursor = 'default';
+
+
+                        }
+
                     }
                 }
             }
         }
+
+
         return options;
     }
 
 
-    let localOption = buildDataSet(Data);
+    let localOption = buildDataSet(Data, value, index);
 
 
     useEffect(() => {

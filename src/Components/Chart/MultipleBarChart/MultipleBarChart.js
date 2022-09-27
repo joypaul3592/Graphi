@@ -142,6 +142,7 @@ export default function MultipleBarChart() {
     const [yValue, setaValue] = useState(0)
     const [xValue, setxValue] = useState(0)
     const submitPost = (e) => {
+        e.preventDefault()
         const label = e.target.names.value;
         const yValue = e.target.number.value;
         const xValue = e.target.number2.value;

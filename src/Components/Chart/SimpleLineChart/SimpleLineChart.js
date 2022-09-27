@@ -13,7 +13,8 @@ export default function SimpleLineChart() {
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-
+    const [value, setValue] = useState(0)
+    const [index, setIndex] = useState(0)
 
     const buildDataSet = (data) => {
         let labels = data?.map(c => c.label);
@@ -67,10 +68,12 @@ export default function SimpleLineChart() {
                         onDrag: function (e, datasetIndex, index, value) {
                             e.target.style.cursor = 'grabbing'
                             // console.log(e, datasetIndex, index, value)
+
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
                             e.target.style.cursor = 'default'
                             // console.log(datasetIndex, index, value)
+
                         },
                     }
                 }
