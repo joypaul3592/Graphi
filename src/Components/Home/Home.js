@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaRegUser, FaRegBell } from "react-icons/fa";
-import { BiMessageDots } from "react-icons/bi";
+import { BiMessageDots, BiLogInCircle } from "react-icons/bi";
 import { RiBarChart2Fill, RiUserHeartLine } from "react-icons/ri";
 import { AiFillLike } from "react-icons/ai";
+import { MdAssignment } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import flower from '../../assect/Flower2.png'
 import flower2 from '../../assect/Flower3.png'
 import cardbg from '../../assect/cardbg.png'
-import graphImg from '../../assect/graphImg.png'
 import HomeBarChart from '../Chart/HomeBarChart/HomeBarChart';
 
+
 const Home = () => {
+    const [show, setShow] = useState(false)
     return (
         <div className=' h-full  flex w-full justify-center items-center'>
-            <div className=' w-full lg:pl-10 px-5'>
+            <div className=' w-full lg:pl-10 px-5  relative'>
                 <div className=' flex w-full justify-between items-center '>
                     <div className='relative md:ml-10 ml-5'>
                         <img className=' md:w-16 w-10 absolute -top-4 -left-10 ' src={flower} alt="flower" />
@@ -26,7 +28,7 @@ const Home = () => {
                         <div className=' bg-green-100 hover:bg-opacity-50 hover:shadow-md  cursor-pointer p-2 rounded-md mr-5'>
                             <FaRegBell />
                         </div>
-                        <div className=' bg-blue-100 hover:bg-opacity-50 hover:shadow-md  cursor-pointer p-2 rounded-md mr-5'>
+                        <div onClick={() => setShow(!show)} className=' bg-blue-100 hover:bg-opacity-50 hover:shadow-md  cursor-pointer p-2 rounded-md mr-5'>
                             <FaRegUser />
                         </div>
                     </div>
@@ -66,7 +68,10 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-
+                <div className={`bg-white bg-opacity-30 backdrop-blur-lg text-white px-6 py-4 absolute top-9 rounded transition-all duration-300 delay-300 ease-out flex flex-col items-start  ${show ? 'block right-10 ease-in duration-300' : 'hidden -right-10 ease-in duration-300'}`}>
+                    <button className=' flex items-center hover:text-purple-500'><BiLogInCircle className='mr-2 text-purple-500' />Log In</button>
+                    <button className=' flex items-center mt-3 hover:text-purple-500'><MdAssignment className='mr-2 text-purple-500 ' />Sign Up</button>
+                </div>
             </div>
         </div>
     );

@@ -146,7 +146,7 @@ export default function MultipleBarChart() {
 
     /* ===================== Data Post =========  */
 
-    const SubmitPost = (event) => {
+    const submitPost = (event) => {
         const label = event.target.names.value;
         const yValue = event.target.number.value;
         const xValue = event.target.number2.value;
@@ -165,7 +165,7 @@ export default function MultipleBarChart() {
                         setdataisLoaded(!dataisLoaded)
                         event.target.names.value = ''
                         event.target.number.value = ''
-                            .target.number2.value = ''
+                        event.target.number2.value = ''
                     }
                 })
 
@@ -181,7 +181,7 @@ export default function MultipleBarChart() {
                         <div className='flex flex-col w-full my-10 md:my-0 md:w-[50%] p-5 rounded-md shadow-md xl:px-10'>
                             <h1 className=' text-purple-800 font-semibold '>Add Your Graph</h1>
                             <hr className='mb-4 mt-1 bg-purple-800 h-[1.5px] w-1/2 flex mx-auto' />
-                            <form onClick={SubmitPost} className='flex flex-col'>
+                            <form onSubmit={submitPost} className='flex flex-col'>
                                 <input type="text" placeholder='Names' name='names' className='bg-gray-100 px-3 py-1 rounded shadow-md' />
 
                                 <input type="number" placeholder='Number' name='number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />

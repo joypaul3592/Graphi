@@ -19,6 +19,7 @@ export default function SimpleLineChart2() {
 
 
     const buildDataSet = (data) => {
+        // console.log(data, value, index)
         let labels = data?.map(c => c.label);
         var options = {
             type: 'line',
@@ -47,6 +48,7 @@ export default function SimpleLineChart2() {
                     if (point.length) e.native.target.style.cursor = 'grab'
                     else e.native.target.style.cursor = 'default'
                 },
+
                 plugins: {
                     dragData: {
                         round: 1,
@@ -75,11 +77,14 @@ export default function SimpleLineChart2() {
                                 })
                             e.target.style.cursor = 'default'
                             // console.log(datasetIndex, index, value)
-                        },
+                        }
+
                     }
                 }
             }
         }
+
+
         return options;
     }
 
