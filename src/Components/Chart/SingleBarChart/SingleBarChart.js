@@ -4,14 +4,18 @@ import ReactToPrint from 'react-to-print';
 import 'chartjs-plugin-dragdata'
 import '../../../App.css'
 import { BiCloudDownload } from "react-icons/bi";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
+import { useNavigate } from 'react-router-dom';
 
 export default function BarChart2() {
-
+     const [user]=useAuthState(auth)
     const ref = useRef();
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
     const [back, setback] = useState({})
-
+   
+  const navigate=useNavigate()
     /* ===================== Data grt =========  */
 
     useEffect(() => {
@@ -190,14 +194,13 @@ export default function BarChart2() {
 
 
 
-
-
     return (
         <div className=' h-full flex justify-center items-center'>
             <div className='   mx-10 w-10/12 '>
 
                 <div className=' w-full'>
-                    <div className=' md:flex items-center justify-between gap-6'>
+                    {
+                        user ?  <div className=' md:flex items-center justify-between gap-6'>
                         <div className=' flex flex-col w-full my-10 md:my-0 md:w-[50%] p-5 bg-white rounded-md shadow-md xl:px-10'>
                             <h1 className=' text-purple-800 font-semibold '>Add Your Graph</h1>
                             <hr className='mb-4 mt-1 bg-purple-800 h-[1.5px] w-1/2 flex mx-auto' />
@@ -209,7 +212,7 @@ export default function BarChart2() {
                                 <button type="submit" className="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
                             </form>
                         </div>
-                        {/* ============ ============= */}
+                  
                         <div className=' bg-white w-full md:w-[50%] h-[13rem] rounded-md shadow-md overflow-auto scroll py-5 px-5'>
                             {
                                 Data.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data._id}>
@@ -221,7 +224,14 @@ export default function BarChart2() {
                                 </div>)
                             }
                         </div>
+                    </div>   : <div className='flex justify-center items-center bg-slate-500 py-14'>
+                    <input type="submit" onClick={()=>navigate("/login")} className='mr-3 btn btn-accent text-white' value={"Login in"} /> <p className='text-white'>or</p>
+                    <input type="submit" className='ml-3 btn btn-accent text-white' value={"Guest"} />
+                        
+
                     </div>
+                    }
+                   
                     <div ref={ref} className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
 
                         {isLoaded &&

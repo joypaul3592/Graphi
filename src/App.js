@@ -8,6 +8,8 @@ import SingleBarChart from './Components/Chart/SingleBarChart/SingleBarChart';
 import Home from './Components/Home/Home';
 import Navbar from './Components/Navbar/Navbar';
 import { Routes, Route } from "react-router-dom";
+import Login from './Components/Auth/Login';
+import Signup from './Components/Auth/Signup';
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
             <Route path="/simpleLineChart" element={<SimpleLineChart />} />
             <Route path="/dualLineChart" element={<SimpleLineChart2 />} />
             <Route path="/graphChart" element={<GraphChart />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
 
         </div>
