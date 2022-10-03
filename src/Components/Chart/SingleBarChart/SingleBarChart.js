@@ -4,6 +4,7 @@ import ReactToPrint from 'react-to-print';
 import 'chartjs-plugin-dragdata'
 import '../../../App.css'
 import { BiCloudDownload } from "react-icons/bi";
+import { useLocation } from 'react-router-dom';
 
 export default function BarChart2() {
 
@@ -12,10 +13,22 @@ export default function BarChart2() {
     const [dataisLoaded, setdataisLoaded] = useState(false)
     const [back, setback] = useState({})
 
+    function makeid() {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < 5; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    }
+    const pathnme = useLocation()
+    const newsuserdata = pathnme.search ? pathnme.search.slice(6, 100) : "user";
+
     /* ===================== Data grt =========  */
 
     useEffect(() => {
-        fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar', {
+        fetch(`http://localhost:5000/api/v1/grap/singleBar/?user=${newsuserdata}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +50,7 @@ export default function BarChart2() {
 
     const buildDataSet = ({ datas }) => {
 
-        let labels = datas?.map(c => c.label);
+        let labels = datas?.map(c => c?.label);
 
         let options = {
             type: 'line',
@@ -167,7 +180,7 @@ export default function BarChart2() {
         const yValue = e.target.number.value;
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
-            fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar', {
+            fetch(`http://localhost:5000/api/v1/grap/singleBar/?user=${newsuserdata}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -194,6 +207,8 @@ export default function BarChart2() {
 
     return (
         <div className=' h-full flex justify-center items-center'>
+            <a href={`/SingleBarChart/?user=${makeid()}`} target="_blank">text</a>
+
             <div className='   mx-10 w-10/12 '>
 
                 <div className=' w-full'>
@@ -212,11 +227,11 @@ export default function BarChart2() {
                         {/* ============ ============= */}
                         <div className=' bg-white w-full md:w-[50%] h-[13rem] rounded-md shadow-md overflow-auto scroll py-5 px-5'>
                             {
-                                Data.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data._id}>
-                                    <p className=' font-medium'>{data.label}</p>
-                                    <p>{data.yValue}</p>
+                                Data?.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data?._id}>
+                                    <p className=' font-medium'>{data?.label}</p>
+                                    <p>{data?.yValue}</p>
 
-                                    <p onClick={() => setDelete(data._id)} className='text-white cursor-pointer px-[6px] border-2 bg-red-400 rounded'>X</p>
+                                    <p onClick={() => setDelete(data?._id)} className='text-white cursor-pointer px-[6px] border-2 bg-red-400 rounded'>X</p>
 
                                 </div>)
                             }
