@@ -5,53 +5,35 @@ import 'chartjs-plugin-dragdata'
 import '../../../App.css'
 import { BiCloudDownload } from "react-icons/bi";
 import { useLocation } from 'react-router-dom';
-
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
+import ShareData from '../ShareData';
+import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel';
+import { Settime } from '../Settimecontrol';
+import SubmitAndDatashow from '../SubmitAndDatashow';
 export default function BarChart2() {
-
+    var userIdentify;
+    const [user] = useAuthState(auth)
     const ref = useRef();
-    const [Data, setData] = useState([])
-    const [dataisLoaded, setdataisLoaded] = useState(false)
-    const [back, setback] = useState({})
-
-    function makeid() {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        for (var i = 0; i < 5; i++)
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-        return text;
-    }
     const pathnme = useLocation()
-    const newsuserdata = pathnme.search ? pathnme.search.slice(6, 100) : "user";
-
-    /* ===================== Data grt =========  */
-
-    useEffect(() => {
-        fetch(`http://localhost:5000/api/v1/grap/singleBar/?user=${newsuserdata}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setData(data?.data)
-            })
-
-    }, [dataisLoaded, back.index])
-
-
-
+    const [Data, setData] = useState([])
+    const [back, setback] = useState({})
+    const [dataisLoaded, setdataisLoaded] = useState(false)
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const pathlocation = 'singleBar'
 
+    /* =========== control data serch ===============  */
 
+    if (pathnme?.search) {
+        userIdentify = pathnme.search.slice(6, 10000)
+    }
+    else if (user?.email) {
+        userIdentify = user?.email
+    }
 
-    const buildDataSet = ({ datas }) => {
-
+    const BuildDataSet = ({ datas }) => {
         let labels = datas?.map(c => c?.label);
-
         let options = {
             type: 'line',
             exportEnabled: true,
@@ -102,33 +84,17 @@ export default function BarChart2() {
                     dragData: {
                         round: 1,
                         showTooltip: true,
+
                         onDragStart: function (e, element) {
 
                         },
                         // Change while dragging 
                         onDrag: function (e, datasetIndex, index, value) {
-
-
                             e.target.style.cursor = 'grabbing'
                         },
                         // Only change when finished dragging 
                         onDragEnd: function (e, datasetIndex, index, value) {
-
-                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar/${index}`, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({ value: value }),
-                            })
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    if (data) {
-                                        setback({ index, value })
-                                    }
-                                })
-
-
+                            AutoDataHandel(index, value)
                             e.target.style.cursor = 'default'
 
 
@@ -140,38 +106,7 @@ export default function BarChart2() {
 
         return options;
     }
-    let localOption = buildDataSet({ datas: Data });
-
-
-
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoaded(true)
-        }, 200);
-    }, [])
-
-
-
-
-    /* ===================== Data Delete =========  */
-    const [Delete, setDelete] = useState()
-    if (Delete) {
-        const id = Delete;
-        fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/singleBar/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data) {
-                    setdataisLoaded(!dataisLoaded)
-                }
-            })
-    }
-
-
+    let localOption = BuildDataSet({ datas: Data });
 
     /* ===================== Data Post =========  */
     const submitPost = (e) => {
@@ -180,65 +115,40 @@ export default function BarChart2() {
         const yValue = e.target.number.value;
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
-            fetch(`http://localhost:5000/api/v1/grap/singleBar/?user=${newsuserdata}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(Data),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data) {
-                        setdataisLoaded(!dataisLoaded)
-                        e.target.names.value = ''
-                        e.target.number.value = ''
-                    }
-                })
-
+            PostData(pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e)
         }
     }
+    /* ===================== Data get =========  */
+    useEffect(() => {
+        if (userIdentify) {
+            GetData(pathlocation, userIdentify, setData)
+        }
+    }, [dataisLoaded, back?.index, back?.value, back?.id])
+    /* ===================== update data  =========  */
+    const AutoDataHandel =(index,value)=>{
+        UpdateData(index, pathlocation, value, setback)
+    }
+    /* ===================== Data Delete =========  */
+    const [Delete, setDelete] = useState()
+    if (Delete) {
+        DeleteData(Delete, pathlocation, setdataisLoaded, dataisLoaded)
+    }
 
-
-
-
-
+    useEffect(() => {
+        Settime(setIsLoaded)
+    }, [])
 
 
     return (
         <div className=' h-full flex justify-center items-center'>
-            <a href={`/SingleBarChart/?user=${makeid()}`} target="_blank">text</a>
-
             <div className='   mx-10 w-10/12 '>
-
                 <div className=' w-full'>
-                    <div className=' md:flex items-center justify-between gap-6'>
-                        <div className=' flex flex-col w-full my-10 md:my-0 md:w-[50%] p-5 bg-white rounded-md shadow-md xl:px-10'>
-                            <h1 className=' text-purple-800 font-semibold '>Add Your Graph</h1>
-                            <hr className='mb-4 mt-1 bg-purple-800 h-[1.5px] w-1/2 flex mx-auto' />
-                            <form onSubmit={submitPost} className='flex flex-col'>
-                                <input type="text" placeholder='Names' name='names' className='bg-gray-100 px-3 py-1 rounded shadow-md' />
+                    {
+                        <SubmitAndDatashow pathnme={pathnme} pathLocation={'SingleBarChart'}   Data={Data} setDelete={setDelete} submitPost={submitPost} />
+                        
+                    }
 
-                                <input type="number" placeholder='Number' name='number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />
-
-                                <button type="submit" className="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
-                            </form>
-                        </div>
-                        {/* ============ ============= */}
-                        <div className=' bg-white w-full md:w-[50%] h-[13rem] rounded-md shadow-md overflow-auto scroll py-5 px-5'>
-                            {
-                                Data?.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data?._id}>
-                                    <p className=' font-medium'>{data?.label}</p>
-                                    <p>{data?.yValue}</p>
-
-                                    <p onClick={() => setDelete(data?._id)} className='text-white cursor-pointer px-[6px] border-2 bg-red-400 rounded'>X</p>
-
-                                </div>)
-                            }
-                        </div>
-                    </div>
                     <div ref={ref} className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
-
                         {isLoaded &&
                             <Bar
                                 redraw={shouldRedraw}
@@ -247,18 +157,21 @@ export default function BarChart2() {
                                 plugins={localOption.plugins}
                             />
                         }
-                        <div className=' absolute -top-10 right-2'>
-                            <ReactToPrint
-                                trigger={() => <button className='text-xl px-1 border-3 text-black font-bold rounded-md shadow-lg  my-10'><BiCloudDownload /></button>}
-                                content={() => ref.current}
-                            />
-                        </div>
+                        {/* =================== copy and share link and Download ===================== */}
+                        {
+                            (user || pathnme?.search) && <div>
+                                <ShareData userIdentify={userIdentify} pathLocation={'SingleBarChart'} />
+                                <div>
+                                    <ReactToPrint
+                                        trigger={() => <button className='absolute -top-0 '><BiCloudDownload /></button>}
+                                        content={() => ref.current}
+                                    />
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
-
-
             </div>
-
         </div>
     );
 }

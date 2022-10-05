@@ -4,19 +4,41 @@ import 'chartjs-plugin-dragdata'
 import ReactToPrint from 'react-to-print';
 import '../../../App.css'
 import { BiCloudDownload } from "react-icons/bi";
+import CopyToClipboard from 'react-copy-to-clipboard';
+import { ChartDatapass, DataPassDekhi, NewUrl } from '../ChartDatapass';
+import auth from '../../../firebase.init';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Settime } from '../Settimecontrol';
+import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel';
+import SubmitAndDatashow from '../SubmitAndDatashow';
+import ShareData from '../ShareData';
 
 export default function SimpleLineChart2() {
+    var userIdentify;
+    const pathlocation = "dualLine";
     const ref = useRef()
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
     const [back, setback] = useState({})
-
+    const [user] = useAuthState(auth)
+    const pathnme = useLocation()
+    const navigate = useNavigate()
 
 
 
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-
+    // if(!user){
+    //     return <Loading></Loading>
+    // }
+    /* =========== control data serch ===============  */
+    if (pathnme?.search) {
+        userIdentify = pathnme.search.slice(6, 10000)
+    }
+    else if (user?.email) {
+        userIdentify = user?.email
+    }
 
     const buildDataSet = (data) => {
         // console.log(data, value, index)
@@ -40,7 +62,7 @@ export default function SimpleLineChart2() {
                 scales: {
                     y: {
                         min: 0,
-                       
+
                     }
                 },
                 onHover: function (e) {
@@ -61,20 +83,7 @@ export default function SimpleLineChart2() {
                             // console.log(e, datasetIndex, index, value)
                         },
                         onDragEnd: function (e, datasetIndex, index, value) {
-                            fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/dualLine/${index}`, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({ value: value }),
-                            })
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    if (data) {
-                                        console.log(data)
-                                        setback({ index, value })
-                                    }
-                                })
+                            AutoDataHandel(index, value)
                             e.target.style.cursor = 'default'
                         }
 
@@ -91,46 +100,6 @@ export default function SimpleLineChart2() {
     let localOption = buildDataSet(Data);
 
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoaded(true)
-        }, 200);
-    }, [])
-
-
-    useEffect(() => {
-        fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/dualLine', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setData(data?.data)
-            })
-
-    }, [dataisLoaded, back.index])
-
-    /* ===================== Data Delete =========  */
-    const [Delete, setDelete] = useState()
-    if (Delete) {
-        const id = Delete;
-        fetch(`https://intense-river-05869.herokuapp.com/api/v1/grap/dualLine/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data) {
-                    setdataisLoaded(!dataisLoaded)
-                }
-            })
-    }
-
-
 
     /* ===================== Data Post =========  */
     const submitPost = (e) => {
@@ -139,54 +108,40 @@ export default function SimpleLineChart2() {
         const yValue = e.target.number.value;
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
-            fetch('https://intense-river-05869.herokuapp.com/api/v1/grap/dualLine', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(Data),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data) {
-                        setdataisLoaded(!dataisLoaded)
-                        e.target.names.value = ''
-                        e.target.number.value = ''
-                    }
-                })
-
+            PostData(pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e)
         }
 
     }
+
+    useEffect(() => {
+        if (userIdentify) {
+            GetData(pathlocation, userIdentify, setData)
+        }
+
+    }, [dataisLoaded, back?.index, back?.value, back?.id])
+
+    const AutoDataHandel = (index, value) => {
+        UpdateData(index, pathlocation, value, setback)
+    }
+
+    /* ===================== Data Delete =========  */
+    const [Delete, setDelete] = useState()
+    if (Delete) {
+        DeleteData(Delete, pathlocation, setdataisLoaded, dataisLoaded)
+    }
+
+    useEffect(() => {
+        Settime(setIsLoaded)
+    }, [])
     return (
         <div className=' h-full flex justify-center items-center'>
             <div className='   mx-10 w-10/12 '>
 
                 <div className=' w-full'>
-                    <div className=' flex items-center justify-between gap-6'>
-                        <div className=' flex flex-col w-full my-10 md:my-0 md:w-[50%] p-5 bg-white rounded-md shadow-md xl:px-10'>
-                            <h1 className=' text-purple-800 font-semibold '>Add Your Graph</h1>
-                            <hr className='mb-4 mt-1 bg-purple-800 h-[1.5px] w-1/2 flex mx-auto' />
-                            <form onSubmit={submitPost} className='flex flex-col'>
-                                <input type="text" placeholder='Names' name='names' className='bg-gray-100 px-3 py-1 rounded shadow-md' />
+                    {
+                        <SubmitAndDatashow pathnme={pathnme} pathLocation={'dualLineChart'} Data={Data} setDelete={setDelete} submitPost={submitPost} />
 
-                                <input type="number" placeholder='Number' name='number' className='bg-gray-100 mt-4 px-3 py-1 rounded shadow-md' />
-
-                                <button type="submit" class="inline-block px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out  mx-auto mt-5">Submit</button>
-                            </form>
-                        </div>
-                        {/* ============ ============= */}
-                        <div className=' bg-white w-full md:w-[50%]  h-[13rem] rounded-md shadow-md overflow-auto scroll py-5 px-5'>
-                            {
-                                Data.map(data => <div className=' bg-white mb-5 flex justify-between items-center px-5 py-1 rounded shadow-md ' key={data._id}>
-                                    <p className=' font-medium'>{data.label}</p>
-                                    <p>{data.yValue}</p>
-                                    <p onClick={() => setDelete(data._id)} className='text-white cursor-pointer px-[6px] border-2 bg-red-400 rounded'>X</p>
-
-                                </div>)
-                            }
-                        </div>
-                    </div>
+                    }
                     <div ref={ref} className=' relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
                         {isLoaded &&
                             <Line
@@ -197,12 +152,18 @@ export default function SimpleLineChart2() {
                                 fillStyle='lightGreen'
                             />
                         }
-                        <div className=' absolute -top-10 right-2'>
-                            <ReactToPrint
-                                trigger={() => <button className='text-xl px-1 border-3 text-black font-bold rounded-md shadow-lg  my-10'><BiCloudDownload /></button>}
-                                content={() => ref.current}
-                            />
-                        </div>
+                        {/* =================== copy and share link and Download ===================== */}
+                        {
+                            (user || pathnme?.search) && <div>
+                                <ShareData userIdentify={userIdentify} pathLocation={'dualLineChart'} />
+                                <div>
+                                    <ReactToPrint
+                                        trigger={() => <button className='absolute -top-0 '><BiCloudDownload /></button>}
+                                        content={() => ref.current}
+                                    />
+                                </div>
+                            </div>
+                        }
                     </div>
 
                 </div>
