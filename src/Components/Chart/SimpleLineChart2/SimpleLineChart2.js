@@ -158,7 +158,7 @@ export default function SimpleLineChart2() {
                                 <ShareData userIdentify={userIdentify} pathLocation={'dualLineChart'} />
                                 <div>
                                     <ReactToPrint
-                                        trigger={() => <button className='absolute -top-0 '><BiCloudDownload /></button>}
+                                        trigger={() => <button className='absolute left-10 -top-0 '><BiCloudDownload /></button>}
                                         content={() => ref.current}
                                     />
                                 </div>

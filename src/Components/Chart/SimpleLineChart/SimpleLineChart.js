@@ -162,7 +162,7 @@ export default function SimpleLineChart() {
                                 <ShareData userIdentify={userIdentify} pathLocation={'simpleLineChart'} />
                                 <div>
                                     <ReactToPrint
-                                        trigger={() => <button className='absolute -top-0 '><BiCloudDownload /></button>}
+                                        trigger={() => <button className='absolute left-10 -top-0 '><BiCloudDownload /></button>}
                                         content={() => ref.current}
                                     />
                                 </div>

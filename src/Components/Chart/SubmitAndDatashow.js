@@ -31,14 +31,14 @@ const SubmitAndDatashow = ({ Data, setDelete, submitPost, pathnme, pathLocation 
                                 <p className=' font-medium'>{data?.label}</p>
                                 <p>{data?.yValue}</p>
 
-                                <p onClick={() => setDelete(data?._id)} className='text-white cursor-pointer px-[6px] border-2 bg-red-400 rounded'>X</p>
+                                <p onClick={() => setDelete(data?._id)} className='text-white  cursor-pointer px-[6px] border-2 bg-red-400 rounded-full text-md '>X</p>
 
                             </div>)
                         }
                     </div>
-                </div> : <div className='flex justify-center items-center bg-slate-500 py-14'>
-                    <input type="submit" onClick={() => navigate("/login")} className='mr-3 btn btn-accent text-white' value={"Login in"} /> <p className='text-white'>or</p>
-                    <a href={`/${pathLocation}/?user=${NewUrl()}`} className='ml-3 btn btn-accent text-white' target="_blank">Guest</a>
+                </div> : <div className='flex justify-center items-center bg-slate-300 py-14 gap-10'>
+                    <input type="submit" onClick={() => navigate("/login")} className=' px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out   btn btn-accent ' value={"Login in"} /> 
+                    <a href={`/${pathLocation}/?user=${NewUrl()}`} className=' px-3 py-2 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out ' target="_blank">Guest</a>
 
                 </div>
             }
