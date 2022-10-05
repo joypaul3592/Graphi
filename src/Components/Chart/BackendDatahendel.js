@@ -11,10 +11,12 @@ const PostData = (pathlocation, userIdentify, Data, setdataisLoaded, dataisLoade
         .then((response) => response.json())
         .then((data) => {
             if (data) {
+                setdataisLoaded(!dataisLoaded)
                 e.target.names.value = ''
                 e.target.number.value = ''
-                e.target.number2.value = ''
-                return setdataisLoaded(!dataisLoaded)
+                if (data.xValue) {
+                    e.target.number2.value = ''
+                }
             }
         })
 }
@@ -31,7 +33,7 @@ const GetData = (pathlocation, userIdentify, setData) => {
             return setData(data?.data)
         })
 }
-const UpdateData = (index,pathlocation,value,setback) => {
+const UpdateData = (index, pathlocation, value, setback) => {
     const id = DataPassDekhi[index]._id
     if (id) {
         fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/${id}`, {
@@ -44,27 +46,29 @@ const UpdateData = (index,pathlocation,value,setback) => {
             .then((response) => response.json())
             .then((data) => {
                 if (data) {
-                   return setback({ index, value, id })
+                    setback({ index, value, id })
                 }
             })
     }
 }
-const DeleteData = (Delete, pathlocation, setdataisLoaded, dataisLoaded) => {
+const DeleteData = (Delete, pathlocation, dataisLoaded, setdataisLoaded) => {
     const id = Delete;
-    fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data) {
-                return setdataisLoaded(!dataisLoaded)
+    if (id) {
+        fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
             }
         })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data) {
+                    setdataisLoaded(true)
+                }
+            })
+    }
 }
 
 
 
-export { GetData, DeleteData, PostData,UpdateData}
+export { GetData, DeleteData, PostData, UpdateData }

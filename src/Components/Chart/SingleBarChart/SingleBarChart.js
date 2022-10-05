@@ -125,13 +125,13 @@ export default function BarChart2() {
         }
     }, [dataisLoaded, back?.index, back?.value, back?.id])
     /* ===================== update data  =========  */
-    const AutoDataHandel =(index,value)=>{
+    const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
     }
     /* ===================== Data Delete =========  */
     const [Delete, setDelete] = useState()
     if (Delete) {
-        DeleteData(Delete, pathlocation, setdataisLoaded, dataisLoaded)
+        DeleteData(Delete, pathlocation,dataisLoaded, setdataisLoaded)
     }
 
     useEffect(() => {
@@ -144,8 +144,8 @@ export default function BarChart2() {
             <div className='   mx-10 w-10/12 '>
                 <div className=' w-full'>
                     {
-                        <SubmitAndDatashow pathnme={pathnme} pathLocation={'SingleBarChart'}   Data={Data} setDelete={setDelete} submitPost={submitPost} />
-                        
+                        <SubmitAndDatashow pathnme={pathnme} pathLocation={'SingleBarChart'} Data={Data} setDelete={setDelete} submitPost={submitPost} />
+
                     }
 
                     <div ref={ref} className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
