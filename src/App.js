@@ -12,32 +12,33 @@ import Login from './Components/Auth/Login';
 import Signup from './Components/Auth/Signup';
 
 function App() {
-
   return (
-    <div className="App">
-      <div className=' lg:flex  lg:h-screen xl:max-w-7xl lg:w-full mx-auto xl:px-10 lg:px-5'>
-        <div className='lg:w-[20%] lg:h-screen  flex justify-center items-center my-10 lg:my-0'>
-          <Navbar></Navbar>
-          <hr className=' hidden lg:block lg:h-[80vh] h-[1px] my-auto lg:w-[1px] bg-teal-700 w-full' />
-        </div>
-        <div className=' h-full lg:w-[77%] w-full '>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/singleBarChart" element={<SingleBarChart />} />
-            <Route path="/horizontalBarChart" element={<HorizontalBarChart />} />
-            <Route path="/multipleBarChart" element={<MultipleBarChart />} />
-            <Route path="/simpleLineChart" element={<SimpleLineChart />} />
-            <Route path="/dualLineChart" element={<SimpleLineChart2 />} />
-            <Route path="/graphChart" element={<GraphChart />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
+  
+      <div className="App">
+        <div className=' lg:flex  lg:h-screen xl:max-w-7xl lg:w-full mx-auto xl:px-10 lg:px-5'>
+          <div className='lg:w-[20%] lg:h-screen  flex justify-center items-center my-10 lg:my-0'>
+            <Navbar></Navbar>
+            <hr className=' hidden lg:block lg:h-[80vh] h-[1px] my-auto lg:w-[1px] bg-teal-700 w-full' />
+          </div>
+          <div className=' h-full lg:w-[77%] w-full '>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/singleBarChart" element={<SingleBarChart />} />
+              <Route path="/horizontalBarChart" element={<HorizontalBarChart />} />
+              <Route path="/multipleBarChart" element={<MultipleBarChart />} />
+              <Route path="/simpleLineChart" element={<SimpleLineChart />} />
+              <Route path="/dualLineChart" element={<SimpleLineChart2 />} />
+              <Route path="/graphChart" element={<GraphChart />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Routes>
 
+          </div>
         </div>
+
       </div>
-
-    </div>
-  );
+      );
+     
 }
 
-export default App;
+      export default App;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { MdOutlineCancel } from "react-icons/md";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -55,10 +55,9 @@ const SignUp = () => {
     const displayName = event.target.Names.value;
     const email = event.target.email.value;
     const password = handel;
-    const photoURL = event.target.images.value;
-    if (handel) {
+    if (displayName && email && password) {
       await createUserWithEmailAndPassword(email, password);
-      await updateProfile({ displayName, photoURL });
+      await updateProfile({ displayName });
     }
     else {
       return;
@@ -84,11 +83,10 @@ const SignUp = () => {
 
   return (
     <div>
-      {/* <Title title={Register}></Title> */}
       <div className='mb-24 mx-5 '>
         <div className="w-full lg:w-1/2 md:w-3/4 mx-auto bg-opacity-10 shadow-lg relative">
           <div className=" p-5 mt-[8rem]   bg-opacity-60 backdrop-blur-lg rounded-lg ">
-            <h1 className='text-4xl font-semibold mb-5 font-mono'>Register</h1>
+            <h1 className='text-4xl font-semibold mb-5 font-mono cursor-pointer'>Register</h1>
             <form onSubmit={handelsubmit} className='text-black'>
 
               <div className="flex flex-col text-left mb-8">
@@ -124,13 +122,9 @@ const SignUp = () => {
                 handelError ? <p className='text-left mb-7 text-red-600 flex '><MdOutlineCancel className='w-5 mr-2'></MdOutlineCancel> {handelError}</p> : ''
               }
 
-
-
-
-
               <div className='mb-2'>
 
-                <input type="submit" className='w-1/3 bg-teal-500 shadow-md py-1 text-xl rounded text-white' value='Register' />
+                <input type="submit" className='w-1/3 bg-teal-500 shadow-md py-1 text-xl rounded text-white cursor-pointer' value='Register' />
               </div>
 
 
