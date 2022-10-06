@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { signOut } from 'firebase/auth';
+import { toast } from 'react-toastify';
 
 
 const Home = () => {
@@ -22,6 +23,7 @@ const Home = () => {
     const logout = () => {
         navigate("/")
         signOut(auth);
+        toast.success('Logout Successful')
 
     };
     return (

@@ -104,10 +104,10 @@ const Login = () => {
 
   // succesfull 
   useEffect(() => {
-    if (loguser) {
+    if (loguser || googleUser) {
       toast.success('LogIn Successful')
     }
-  }, [loguser])
+  }, [loguser, googleUser])
 
 
   // User sign up error
