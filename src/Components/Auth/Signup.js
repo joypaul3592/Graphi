@@ -5,6 +5,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import auth from '../../firebase.init';
 import { toast } from 'react-toastify';
+import Loading from './Loading';
 
 const SignUp = () => {
   const location = useLocation()
@@ -64,10 +65,13 @@ const SignUp = () => {
     }
   }
 
+
+
+
   // user sign up succesful
   useEffect(() => {
     if (createUser) {
-      naviget(from, { replace: true });
+      naviget(-1);
       toast.success('SignUp Successful!!')
       toast.success('Verification Code Sent to the Email!!')
     }
@@ -79,6 +83,11 @@ const SignUp = () => {
       toast("Opp!! Allrady Have An Account")
     }
   }, [createError])
+
+
+  if (loading || googleLoading) {
+    return <Loading></Loading>
+  }
 
 
   return (

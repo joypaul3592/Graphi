@@ -37,7 +37,7 @@ const SubmitAndDatashow = ({ Data, setDelete, submitPost, pathnme, pathLocation 
                         }
                     </div>
                 </div> : <div className='flex border border-gray-200 justify-center items-center bg-white shadow-md py-14 gap-10'>
-                    <input type="submit" onClick={() => navigate("/login")} className=' px-3 py-2 bg-green-500 text-white font-medium leading-tight text-sm rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out   btn btn-accent ' value={"Login in"} />
+                    <input type="submit" onClick={() => navigate("/login")} className=' px-3 py-2 bg-green-500 text-white font-medium leading-tight text-sm rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out btn btn-accent ' value={"Login in"} />
                     <a href={`/${pathLocation}/?user=${NewUrl()}`} className=' px-3 py-2 bg-green-500 text-white font-medium text-sm leading-tight rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out ' target="_blank">Guest</a>
 
                 </div>

@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { MdOutlineCancel } from "react-icons/md";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import auth from '../../firebase.init';
+import Loading from './Loading';
 
 
 const Login = () => {
@@ -21,6 +22,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
+  console.log({ prev: location.pathname })
   // Error
   const [emailError, setEmailError] = useState('');
   const [passError, setPassError] = useState('');
@@ -94,7 +97,7 @@ const Login = () => {
         .then((response) => response.json())
         .then((data) => {
           localStorage.setItem('accessToken', data.token)
-          naviget(from, { replace: true });
+          naviget(-1);
         });
     }
   }, [user])
@@ -131,7 +134,9 @@ const Login = () => {
   }
 
 
-
+  if (loading || googleLoading) {
+    return <Loading></Loading>
+  }
 
 
   return (
