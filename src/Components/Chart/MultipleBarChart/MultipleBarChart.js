@@ -7,7 +7,7 @@ import { BiCloudDownload } from "react-icons/bi";
 import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import {DataPassDekhi} from '../ChartDatapass';
+import { DataPassDekhi } from '../ChartDatapass';
 import { Settime } from '../Settimecontrol';
 import { DeleteData, GetData, PostData } from '../BackendDatahendel';
 import SubmitAndDatashow from '../SubmitAndDatashow';
@@ -16,19 +16,19 @@ import ShareData from '../ShareData';
 
 export default function MultipleBarChart() {
     var userIdentify;
+    const [Delete, setDelete] = useState()
+
     const pathlocation = "multipleBar"
     const [user] = useAuthState(auth)
     const ref = useRef()
     const pathnme = useLocation()
+    var [counter, setCounter] = useState(0)
     const [Data, setData] = useState([])
     const [back, setback] = useState({})
     const [dataisLoaded, setdataisLoaded] = useState(false)
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // if(!user){
-    //     return <Loading></Loading>
-    // }
     /* =========== control data serch ===============  */
     if (pathnme?.search) {
         console.log("pathnme")
@@ -111,8 +111,6 @@ export default function MultipleBarChart() {
                                     })
                             }
 
-
-
                         },
                     }
                 }
@@ -122,8 +120,6 @@ export default function MultipleBarChart() {
         return options;
     }
     let localOption = buildDataSet(Data);
-
-
 
 
     /* ===================== Data Post =========  */
@@ -140,13 +136,12 @@ export default function MultipleBarChart() {
     /* ===================== Data grt =========  */
     useEffect(() => {
         if (userIdentify) {
-            GetData(pathlocation, userIdentify, setData)
+            GetData(pathlocation, userIdentify, setData, setDelete)
         }
-    }, [dataisLoaded, back?.index, back?.value, back?.id, back.datasetIndex])
+    }, [user, counter, dataisLoaded, back?.index, back?.value, back?.id, back.datasetIndex])
     /* ===================== Data Delete =========  */
-    const [Delete, setDelete] = useState()
     if (Delete) {
-        DeleteData(Delete, pathlocation, setdataisLoaded, dataisLoaded)
+        DeleteData(Delete, pathlocation, counter, setCounter)
     }
     useEffect(() => {
         Settime(setIsLoaded)

@@ -4,11 +4,9 @@ import 'chartjs-plugin-dragdata'
 import ReactToPrint from 'react-to-print';
 import '../../../App.css'
 import { BiCloudDownload } from "react-icons/bi";
-import CopyToClipboard from 'react-copy-to-clipboard';
-import { ChartDatapass, DataPassDekhi, NewUrl } from '../ChartDatapass';
 import auth from '../../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Settime } from '../Settimecontrol';
 import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel';
 import SubmitAndDatashow from '../SubmitAndDatashow';
@@ -16,23 +14,18 @@ import ShareData from '../ShareData';
 
 export default function SimpleLineChart2() {
     var userIdentify;
+    const [Delete, setDelete] = useState()
     const pathlocation = "dualLine";
     const ref = useRef()
+    var [counter, setCounter] = useState(0)
     const [Data, setData] = useState([])
     const [dataisLoaded, setdataisLoaded] = useState(false)
     const [back, setback] = useState({})
     const [user] = useAuthState(auth)
     const pathnme = useLocation()
-    const navigate = useNavigate()
-
-
-
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-    // if(!user){
-    //     return <Loading></Loading>
-    // }
-    /* =========== control data serch ===============  */
+ 
     if (pathnme?.search) {
         userIdentify = pathnme.search.slice(6, 10000)
     }
@@ -96,10 +89,7 @@ export default function SimpleLineChart2() {
         return options;
     }
 
-
     let localOption = buildDataSet(Data);
-
-
 
     /* ===================== Data Post =========  */
     const submitPost = (e) => {
@@ -115,19 +105,17 @@ export default function SimpleLineChart2() {
 
     useEffect(() => {
         if (userIdentify) {
-            GetData(pathlocation, userIdentify, setData)
+            GetData(pathlocation, userIdentify, setData, setDelete)
         }
 
-    }, [dataisLoaded, back?.index, back?.value, back?.id])
+    }, [user, counter, dataisLoaded, back?.index, back?.value, back?.id])
 
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
     }
-
     /* ===================== Data Delete =========  */
-    const [Delete, setDelete] = useState()
     if (Delete) {
-        DeleteData(Delete, pathlocation, setdataisLoaded, dataisLoaded)
+        DeleteData(Delete, pathlocation, counter, setCounter)
     }
 
     useEffect(() => {

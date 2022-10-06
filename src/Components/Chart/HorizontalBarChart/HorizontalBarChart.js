@@ -14,9 +14,11 @@ import SubmitAndDatashow from '../SubmitAndDatashow';
 
 export default function HorizentalBar() {
     var userIdentify;
+    const [Delete, setDelete] = useState()
     const [user] = useAuthState(auth)
     const ref = useRef()
     const [Data, setData] = useState([])
+    var [counter, setCounter] = useState(0)
     const [dataisLoaded, setdataisLoaded] = useState(false)
     const [back, setback] = useState({})
     const pathnme = useLocation()
@@ -98,18 +100,16 @@ export default function HorizentalBar() {
     /* ===================== Data grt =========  */
     useEffect(() => {
         if (userIdentify) {
-            GetData(pathlocation, userIdentify, setData)
+            GetData(pathlocation, userIdentify, setData, setDelete)
         }
-
-    }, [dataisLoaded, back?.index, back?.value, back?.id])
+    }, [user, counter, dataisLoaded, back?.index, back?.value, back?.id])
     /* ===================== update data  =========  */
     const AutoUpdateData = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
     }
     /* ===================== Data Delete =========  */
-    const [Delete, setDelete] = useState()
     if (Delete) {
-        DeleteData(Delete, pathlocation, setdataisLoaded, dataisLoaded)
+        DeleteData(Delete, pathlocation,counter, setCounter)
     }
     useEffect(() => {
         Settime(setIsLoaded)

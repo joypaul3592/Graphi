@@ -1,5 +1,4 @@
 import { ChartDatapass, DataPassDekhi } from "./ChartDatapass"
-
 const PostData = (pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e) => {
     fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/?user=${userIdentify}`, {
         method: 'POST',
@@ -14,13 +13,13 @@ const PostData = (pathlocation, userIdentify, Data, setdataisLoaded, dataisLoade
                 setdataisLoaded(!dataisLoaded)
                 e.target.names.value = ''
                 e.target.number.value = ''
-                if (data.xValue) {
+                if (data?.data?.xValue) {
                     e.target.number2.value = ''
                 }
             }
         })
 }
-const GetData = (pathlocation, userIdentify, setData) => {
+const GetData = (pathlocation, userIdentify, setData, setDelete) => {
     fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/?user=${userIdentify}`, {
         method: 'GET',
         headers: {
@@ -29,8 +28,9 @@ const GetData = (pathlocation, userIdentify, setData) => {
     })
         .then((response) => response.json())
         .then((data) => {
+            setDelete(0)
             ChartDatapass(data?.data)
-            return setData(data?.data)
+            setData(data?.data)
         })
 }
 const UpdateData = (index, pathlocation, value, setback) => {
@@ -51,7 +51,7 @@ const UpdateData = (index, pathlocation, value, setback) => {
             })
     }
 }
-const DeleteData = (Delete, pathlocation, dataisLoaded, setdataisLoaded) => {
+const DeleteData = (Delete, pathlocation, counter, setCounter) => {
     const id = Delete;
     if (id) {
         fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/${id}`, {
@@ -62,8 +62,8 @@ const DeleteData = (Delete, pathlocation, dataisLoaded, setdataisLoaded) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                if (data) {
-                    setdataisLoaded(true)
+                if (data?.data?.acknowledged) {
+                    setCounter(counter + 1)
                 }
             })
     }

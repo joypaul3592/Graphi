@@ -17,11 +17,13 @@ import { signOut } from 'firebase/auth';
 
 const Home = () => {
     const [show, setShow] = useState(false)
-    const [user]=useAuthState(auth)
-    const navigate=useNavigate()
+    const [user, loading, error] = useAuthState(auth)
+    const navigate = useNavigate()
     const logout = () => {
+        navigate("/")
         signOut(auth);
-      };
+
+    };
     return (
         <div className=' h-full  flex w-full justify-center items-center'>
             <div className=' w-full lg:pl-10 px-5  relative'>
@@ -79,9 +81,9 @@ const Home = () => {
                 </div>
                 <div className={`bg-white bg-opacity-30 backdrop-blur-lg text-white px-6 py-4 absolute top-9 rounded transition-all duration-300 delay-300 ease-out flex flex-col items-start  ${show ? 'block right-10 ease-in duration-300' : 'hidden -right-10 ease-in duration-300'}`}>
                     {
-                        user ?    <button onClick={()=>logout()} className=' flex items-center hover:text-purple-500'><FaSignOutAlt className='mr-2 text-purple-500' />Log out</button>:<>
-                        <button onClick={()=>navigate("/login")} className=' flex items-center hover:text-purple-500'><BiLogInCircle className='mr-2 text-purple-500' />Log In</button>
-                    <button onClick={()=>navigate("/signup")} className=' flex items-center mt-3 hover:text-purple-500'><MdAssignment className='mr-2 text-purple-500 ' />Sign Up</button></>
+                        user ? <button onClick={() => logout()} className=' flex items-center hover:text-purple-500'><FaSignOutAlt className='mr-2 text-purple-500' />Log out</button> : <>
+                            <button onClick={() => navigate("/login")} className=' flex items-center hover:text-purple-500'><BiLogInCircle className='mr-2 text-purple-500' />Log In</button>
+                            <button onClick={() => navigate("/signup")} className=' flex items-center mt-3 hover:text-purple-500'><MdAssignment className='mr-2 text-purple-500 ' />Sign Up</button></>
                     }
                 </div>
             </div>

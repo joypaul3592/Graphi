@@ -14,9 +14,11 @@ import SubmitAndDatashow from '../SubmitAndDatashow';
 
 export default function SimpleLineChart() {
     var userIdentify;
+    const [Delete, setDelete] = useState()
     const pathlocation = "simpleLine";
     const ref = useRef()
     const [Data, setData] = useState([])
+    var [counter, setCounter] = useState(0)
     const [dataisLoaded, setdataisLoaded] = useState(false)
     const [back, setback] = useState({})
     const [user] = useAuthState(auth)
@@ -117,9 +119,9 @@ export default function SimpleLineChart() {
     /* ===================== Data grt =========  */
     useEffect(() => {
         if (userIdentify) {
-            GetData(pathlocation, userIdentify, setData)
+            GetData(pathlocation, userIdentify, setData,setCounter)
         }
-    }, [dataisLoaded, back?.index, back?.value, back?.id])
+    }, [user,counter,dataisLoaded, back?.index, back?.value, back?.id])
 
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
@@ -128,9 +130,8 @@ export default function SimpleLineChart() {
 
 
     /* ===================== Data Delete =========  */
-    const [Delete, setDelete] = useState()
     if (Delete) {
-        DeleteData(Delete, pathlocation, setdataisLoaded, dataisLoaded)
+        DeleteData(Delete, pathlocation, counter, setCounter)
     }
 
     useEffect(() => {

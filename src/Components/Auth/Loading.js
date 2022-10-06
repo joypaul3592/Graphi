@@ -20,8 +20,6 @@ const Loading = () => {
   return (
     <div>
       <div style={{"zIndex":10}} className="sweet-loading absolute top-1/2 right-1/2">
-
-
         <BounceLoader
           color={color} loading={loading} css={override} size={60} />
       </div>

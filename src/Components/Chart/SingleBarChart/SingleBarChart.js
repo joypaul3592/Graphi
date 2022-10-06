@@ -13,6 +13,7 @@ import { Settime } from '../Settimecontrol';
 import SubmitAndDatashow from '../SubmitAndDatashow';
 export default function BarChart2() {
     var userIdentify;
+    const [Delete, setDelete] = useState(0)
     const [user] = useAuthState(auth)
     const ref = useRef();
     const pathnme = useLocation()
@@ -20,10 +21,9 @@ export default function BarChart2() {
     const [back, setback] = useState({})
     const [dataisLoaded, setdataisLoaded] = useState(false)
     const [shouldRedraw] = useState(false);
+    const [counter, setCounter] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
     const pathlocation = 'singleBar'
-
-    /* =========== control data serch ===============  */
 
     if (pathnme?.search) {
         userIdentify = pathnme.search.slice(6, 10000)
@@ -121,23 +121,21 @@ export default function BarChart2() {
     /* ===================== Data get =========  */
     useEffect(() => {
         if (userIdentify) {
-            GetData(pathlocation, userIdentify, setData)
+            GetData(pathlocation, userIdentify, setData, setDelete)
         }
-    }, [dataisLoaded, back?.index, back?.value, back?.id])
+    }, [user, counter, dataisLoaded, back?.index, back?.value, back?.id])
     /* ===================== update data  =========  */
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
     }
     /* ===================== Data Delete =========  */
-    const [Delete, setDelete] = useState()
     if (Delete) {
-        DeleteData(Delete, pathlocation,dataisLoaded, setdataisLoaded)
+        DeleteData(Delete, pathlocation, counter, setCounter)
     }
 
     useEffect(() => {
         Settime(setIsLoaded)
     }, [])
-
 
     return (
         <div className=' h-full flex justify-center items-center'>
