@@ -1,6 +1,7 @@
 import { ChartDatapass, DataPassDekhi } from "./ChartDatapass"
 const PostData = (pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e) => {
-    fetch(`https://blooming-meadow-86067.herokuapp.com/api/v1/grap/${pathlocation}/?user=${userIdentify}`, {
+    /* ========= logic socket io ================  */
+    fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/?user=${userIdentify}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -20,7 +21,7 @@ const PostData = (pathlocation, userIdentify, Data, setdataisLoaded, dataisLoade
         })
 }
 const GetData = (pathlocation, userIdentify, setData, setDelete) => {
-    fetch(`https://blooming-meadow-86067.herokuapp.com/api/v1/grap/${pathlocation}/?user=${userIdentify}`, {
+    fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/?user=${userIdentify}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -31,12 +32,13 @@ const GetData = (pathlocation, userIdentify, setData, setDelete) => {
             setDelete(0)
             ChartDatapass(data?.data)
             setData(data?.data)
+            
         })
 }
 const UpdateData = (index, pathlocation, value, setback) => {
     const id = DataPassDekhi[index]._id
     if (id) {
-        fetch(`https://blooming-meadow-86067.herokuapp.com/api/v1/grap/${pathlocation}/${id}`, {
+        fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,7 +56,7 @@ const UpdateData = (index, pathlocation, value, setback) => {
 const DeleteData = (Delete, pathlocation, counter, setCounter) => {
     const id = Delete;
     if (id) {
-        fetch(`https://blooming-meadow-86067.herokuapp.com/api/v1/grap/${pathlocation}/${id}`, {
+        fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

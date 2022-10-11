@@ -11,6 +11,9 @@ import ShareData from '../ShareData';
 import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel';
 import { Settime } from '../Settimecontrol';
 import SubmitAndDatashow from '../SubmitAndDatashow';
+import { io } from 'socket.io-client';
+const ENDPOINT = "http://localhost:5000";
+var socket, selectedChatCompare;
 export default function BarChart2() {
     var userIdentify;
     const [Delete, setDelete] = useState(0)
@@ -23,8 +26,9 @@ export default function BarChart2() {
     const [shouldRedraw] = useState(false);
     const [counter, setCounter] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
+    const [socketConnected, setSocketConnected] = useState(false);
     const pathlocation = 'singleBar'
-
+    console.log(socketConnected)
     if (pathnme?.search) {
         userIdentify = pathnme.search.slice(6, 10000)
     }
@@ -118,13 +122,31 @@ export default function BarChart2() {
             PostData(pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e)
         }
     }
+
     /* ===================== Data get =========  */
     useEffect(() => {
         if (userIdentify) {
             GetData(pathlocation, userIdentify, setData, setDelete)
         }
-    }, [user, counter, dataisLoaded, back?.index, back?.value, back?.id])
+    }, [counter, dataisLoaded, back?.index, back?.value, back?.id])
     /* ===================== update data  =========  */
+    /* 
+        */
+    // useEffect(() => {
+    //     socket = io(ENDPOINT);
+    //     socket.emit("setup", userIdentify);
+    //     socket.on("connected", () => setSocketConnected(true));
+    // })
+    /* 
+    
+    
+    
+    */
+
+
+
+
+
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
     }
