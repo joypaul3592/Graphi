@@ -12,7 +12,12 @@ import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel'
 import ShareData from '../ShareData';
 import SubmitAndDatashow from '../SubmitAndDatashow';
 
+import io from 'socket.io-client';
+
+const socket = io("http://localhost:5000")
+
 export default function HorizentalBar() {
+    
     var userIdentify;
     const [Delete, setDelete] = useState()
     const [user] = useAuthState(auth)
@@ -95,14 +100,22 @@ export default function HorizentalBar() {
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
             PostData(pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e)
+            socket.emit('store_data')
         }
     }
+
     /* ===================== Data grt =========  */
     useEffect(() => {
-        if (userIdentify) {
+        if(userIdentify) {
+            socket.on("get_data", () => {
+                GetData(pathlocation, userIdentify, setData, setDelete)
+            })
             GetData(pathlocation, userIdentify, setData, setDelete)
         }
-    }, [user, counter, dataisLoaded, back?.index, back?.value, back?.id])
+        return () => {
+            socket.off("get_data")
+        }
+    }, [socket, user, counter, dataisLoaded, back?.index, back?.value, back?.id])
     /* ===================== update data  =========  */
     const AutoUpdateData = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
