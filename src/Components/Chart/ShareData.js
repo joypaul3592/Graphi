@@ -10,7 +10,7 @@ const ShareData = ({ userIdentify, pathLocation }) => {
                 <a href={`/${pathLocation}/?user=${NewUrl()}`} target="_blank" className="px-3 py-2 bg-green-500 text-white font-medium  rounded shadow-md text-xs">Create url</a>
             </div>
             <div>
-                <CopyToClipboard text={`http://localhost:3000/${pathLocation}/?user=${userIdentify}`}>
+                <CopyToClipboard text={`https://graphi-154a5.web.app/${pathLocation}/?user=${userIdentify}`}>
                     <button onClick={() => setcopyLink(true)} className={`px-3 py-2 ${copyLink ? 'bg-red-500' : 'bg-green-500'}  text-white font-medium  rounded shadow-md text-xs`}>Copy url</button>
                 </CopyToClipboard>
             </div>
