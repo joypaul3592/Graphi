@@ -1,6 +1,5 @@
 import { ChartDatapass, DataPassDekhi } from "./ChartDatapass"
 const PostData = (pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e) => {
-    /* ========= logic socket io ================  */
     fetch(`http://localhost:5000/api/v1/grap/${pathlocation}/?user=${userIdentify}`, {
         method: 'POST',
         headers: {

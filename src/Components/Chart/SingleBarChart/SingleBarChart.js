@@ -11,9 +11,9 @@ import ShareData from '../ShareData';
 import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel';
 import { Settime } from '../Settimecontrol';
 import SubmitAndDatashow from '../SubmitAndDatashow';
-import { io } from 'socket.io-client';
-const ENDPOINT = "http://localhost:5000";
-var socket, selectedChatCompare;
+import io from 'socket.io-client';
+//http://localhost:5000
+const socket = io("http://localhost:5000")
 export default function BarChart2() {
     var userIdentify;
     const [Delete, setDelete] = useState(0)
@@ -26,9 +26,7 @@ export default function BarChart2() {
     const [shouldRedraw] = useState(false);
     const [counter, setCounter] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
-    const [socketConnected, setSocketConnected] = useState(false);
     const pathlocation = 'singleBar'
-    console.log(socketConnected)
     if (pathnme?.search) {
         userIdentify = pathnme.search.slice(6, 10000)
     }
@@ -120,39 +118,35 @@ export default function BarChart2() {
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
             PostData(pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e)
+            socket.emit('store_data')
         }
     }
 
     /* ===================== Data get =========  */
     useEffect(() => {
-        if (userIdentify) {
+       
+        if(userIdentify) {
+            socket.on("get_data", () => {
+                GetData(pathlocation, userIdentify, setData, setDelete)
+            })
             GetData(pathlocation, userIdentify, setData, setDelete)
         }
-    }, [counter, dataisLoaded, back?.index, back?.value, back?.id])
-    /* ===================== update data  =========  */
-    /* 
-        */
-    // useEffect(() => {
-    //     socket = io(ENDPOINT);
-    //     socket.emit("setup", userIdentify);
-    //     socket.on("connected", () => setSocketConnected(true));
-    // })
-    /* 
-    
-    
-    
-    */
-
-
-
+        return () => {
+            socket.off("get_data")
+        }
+    }, [socket, user, counter, dataisLoaded, back?.index, back?.value, back?.id])
 
 
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
+        return setTimeout(() => {
+            socket.emit('store_data')
+        }, 1000);
     }
     /* ===================== Data Delete =========  */
     if (Delete) {
         DeleteData(Delete, pathlocation, counter, setCounter)
+        socket.emit('store_data')
     }
 
     useEffect(() => {
