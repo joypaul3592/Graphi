@@ -11,7 +11,8 @@ import { Settime } from '../Settimecontrol';
 import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel';
 import ShareData from '../ShareData';
 import SubmitAndDatashow from '../SubmitAndDatashow';
-
+import io from 'socket.io-client';
+const socket = io("https://blooming-meadow-86067.herokuapp.com")
 export default function SimpleLineChart() {
     var userIdentify;
     const [Delete, setDelete] = useState()
@@ -114,6 +115,7 @@ export default function SimpleLineChart() {
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
             PostData(pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e)
+            socket.emit('store_data')
         }
     }
     /* ===================== Data grt =========  */
@@ -121,10 +123,22 @@ export default function SimpleLineChart() {
         if (userIdentify) {
             GetData(pathlocation, userIdentify, setData,setCounter)
         }
+        if (userIdentify) {
+            socket.on("get_data", () => {
+                GetData(pathlocation, userIdentify, setData,setCounter)
+            })
+            GetData(pathlocation, userIdentify, setData,setCounter)
+        }
+        return () => {
+            socket.off("get_data")
+        }
     }, [user,counter,dataisLoaded, back?.index, back?.value, back?.id])
 
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
+        return setTimeout(() => {
+            socket.emit('store_data')
+        }, 2000);
     }
 
 

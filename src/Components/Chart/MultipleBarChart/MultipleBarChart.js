@@ -12,6 +12,9 @@ import { Settime } from '../Settimecontrol';
 import { DeleteData, GetData, PostData } from '../BackendDatahendel';
 import SubmitAndDatashow from '../SubmitAndDatashow';
 import ShareData from '../ShareData';
+import io from 'socket.io-client';
+
+const socket = io("https://blooming-meadow-86067.herokuapp.com")
 
 
 export default function MultipleBarChart() {
@@ -105,8 +108,11 @@ export default function MultipleBarChart() {
                                     .then((response) => response.json())
                                     .then((data) => {
                                         if (data) {
-                                            console.log(data)
                                             setback({ index, datasetIndex, value, id })
+                                            return setTimeout(() => {
+                                                socket.emit('store_data')
+                                            }, 2000);
+
                                         }
                                     })
                             }
@@ -130,18 +136,27 @@ export default function MultipleBarChart() {
         if (label && yValue && xValue) {
             const Data = { label: label, yValue: yValue, xValue: xValue }
             PostData(pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e)
+            socket.emit('store_data')
+
         }
         e.preventDefault()
     }
     /* ===================== Data grt =========  */
     useEffect(() => {
         if (userIdentify) {
+            socket.on("get_data", () => {
+                GetData(pathlocation, userIdentify, setData, setDelete)
+            })
             GetData(pathlocation, userIdentify, setData, setDelete)
         }
-    }, [user, counter, dataisLoaded, back?.index, back?.value, back?.id, back.datasetIndex])
+        return () => {
+            socket.off("get_data")
+        }
+    }, [socket, user, counter, dataisLoaded, back?.index, back?.value, back?.id, back.datasetIndex])
     /* ===================== Data Delete =========  */
     if (Delete) {
         DeleteData(Delete, pathlocation, counter, setCounter)
+        socket.emit('store_data')
     }
     useEffect(() => {
         Settime(setIsLoaded)
