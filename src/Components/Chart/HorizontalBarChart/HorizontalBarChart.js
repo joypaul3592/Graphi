@@ -17,7 +17,7 @@ import io from 'socket.io-client';
 const socket = io("http://localhost:5000")
 
 export default function HorizentalBar() {
-    
+
     var userIdentify;
     const [Delete, setDelete] = useState()
     const [user] = useAuthState(auth)
@@ -106,7 +106,7 @@ export default function HorizentalBar() {
 
     /* ===================== Data grt =========  */
     useEffect(() => {
-        if(userIdentify) {
+        if (userIdentify) {
             socket.on("get_data", () => {
                 GetData(pathlocation, userIdentify, setData, setDelete)
             })
@@ -119,10 +119,14 @@ export default function HorizentalBar() {
     /* ===================== update data  =========  */
     const AutoUpdateData = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
+        return setTimeout(() => {
+            socket.emit('store_data')
+        }, 1000);
     }
     /* ===================== Data Delete =========  */
     if (Delete) {
-        DeleteData(Delete, pathlocation,counter, setCounter)
+        DeleteData(Delete, pathlocation, counter, setCounter)
+        socket.emit('store_data')
     }
     useEffect(() => {
         Settime(setIsLoaded)

@@ -11,7 +11,8 @@ import { Settime } from '../Settimecontrol';
 import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel';
 import SubmitAndDatashow from '../SubmitAndDatashow';
 import ShareData from '../ShareData';
-
+import io from 'socket.io-client';
+const socket = io("http://localhost:5000")
 export default function SimpleLineChart2() {
     var userIdentify;
     const [Delete, setDelete] = useState()
@@ -99,23 +100,34 @@ export default function SimpleLineChart2() {
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
             PostData(pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e)
+            socket.emit('store_data')
         }
 
     }
 
     useEffect(() => {
-        if (userIdentify) {
+        if(userIdentify) {
+            socket.on("get_data", () => {
+                GetData(pathlocation, userIdentify, setData, setDelete)
+            })
             GetData(pathlocation, userIdentify, setData, setDelete)
         }
+        return () => {
+            socket.off("get_data")
+        }
 
-    }, [user, counter, dataisLoaded, back?.index, back?.value, back?.id])
+    }, [socket,user, counter, dataisLoaded, back?.index, back?.value, back?.id])
 
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
+        return setTimeout(() => {
+            socket.emit('store_data')
+        }, 1000);
     }
     /* ===================== Data Delete =========  */
     if (Delete) {
         DeleteData(Delete, pathlocation, counter, setCounter)
+        socket.emit('store_data')
     }
 
     useEffect(() => {

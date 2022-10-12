@@ -12,7 +12,6 @@ import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel'
 import { Settime } from '../Settimecontrol';
 import SubmitAndDatashow from '../SubmitAndDatashow';
 import io from 'socket.io-client';
-//http://localhost:5000
 const socket = io("http://localhost:5000")
 export default function BarChart2() {
     var userIdentify;
