@@ -11,8 +11,10 @@ import ShareData from '../ShareData';
 import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel';
 import { Settime } from '../Settimecontrol';
 import SubmitAndDatashow from '../SubmitAndDatashow';
+
 import io from 'socket.io-client';
-const socket = io("http://localhost:5000")
+const socket = io("https://blooming-meadow-86067.herokuapp.com")
+
 export default function BarChart2() {
     var userIdentify;
     const [Delete, setDelete] = useState(0)
@@ -113,7 +115,7 @@ export default function BarChart2() {
     const submitPost = (e) => {
         e.preventDefault()
         const label = e.target.names.value;
-        const yValue = e.target.number.value;
+        const yValue = parseFloat(e.target.number.value);
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
             PostData(pathlocation, userIdentify, Data, setdataisLoaded, dataisLoaded, e)
