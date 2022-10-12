@@ -28,7 +28,6 @@ export default function BarChart2() {
     const [counter, setCounter] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
     const pathlocation = 'singleBar'
-
     if (pathnme?.search) {
         userIdentify = pathnme.search.slice(6, 10000)
     }
@@ -123,9 +122,11 @@ export default function BarChart2() {
             socket.emit('store_data')
         }
     }
+
     /* ===================== Data get =========  */
     useEffect(() => {
-        if (userIdentify) {
+       
+        if(userIdentify) {
             socket.on("get_data", () => {
                 GetData(pathlocation, userIdentify, setData, setDelete)
             })
@@ -135,12 +136,13 @@ export default function BarChart2() {
             socket.off("get_data")
         }
     }, [socket, user, counter, dataisLoaded, back?.index, back?.value, back?.id])
-    /* ===================== update data  =========  */
+
+
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
         return setTimeout(() => {
             socket.emit('store_data')
-        }, 2000);
+        }, 1000);
     }
     /* ===================== Data Delete =========  */
     if (Delete) {

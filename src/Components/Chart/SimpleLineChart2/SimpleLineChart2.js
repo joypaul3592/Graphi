@@ -108,7 +108,7 @@ export default function SimpleLineChart2() {
     }
 
     useEffect(() => {
-        if (userIdentify) {
+        if(userIdentify) {
             socket.on("get_data", () => {
                 GetData(pathlocation, userIdentify, setData, setDelete)
             })
@@ -124,7 +124,7 @@ export default function SimpleLineChart2() {
         UpdateData(index, pathlocation, value, setback)
         return setTimeout(() => {
             socket.emit('store_data')
-        }, 2000);
+        }, 1000);
     }
     /* ===================== Data Delete =========  */
     if (Delete) {

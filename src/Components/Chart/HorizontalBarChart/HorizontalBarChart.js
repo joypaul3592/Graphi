@@ -121,8 +121,7 @@ export default function HorizentalBar() {
         UpdateData(index, pathlocation, value, setback)
         return setTimeout(() => {
             socket.emit('store_data')
-        }, 2000);
-
+        }, 1000);
     }
     /* ===================== Data Delete =========  */
     if (Delete) {

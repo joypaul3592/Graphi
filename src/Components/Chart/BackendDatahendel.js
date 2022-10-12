@@ -31,6 +31,7 @@ const GetData = (pathlocation, userIdentify, setData, setDelete) => {
             setDelete(0)
             ChartDatapass(data?.data)
             setData(data?.data)
+            
         })
 }
 const UpdateData = (index, pathlocation, value, setback) => {

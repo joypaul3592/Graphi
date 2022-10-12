@@ -120,10 +120,7 @@ export default function SimpleLineChart() {
     }
     /* ===================== Data grt =========  */
     useEffect(() => {
-        if (userIdentify) {
-            GetData(pathlocation, userIdentify, setData,setCounter)
-        }
-        if (userIdentify) {
+        if(userIdentify) {
             socket.on("get_data", () => {
                 GetData(pathlocation, userIdentify, setData,setCounter)
             })
@@ -132,13 +129,13 @@ export default function SimpleLineChart() {
         return () => {
             socket.off("get_data")
         }
-    }, [user,counter,dataisLoaded, back?.index, back?.value, back?.id])
+    }, [socket,user,counter,dataisLoaded, back?.index, back?.value, back?.id])
 
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
         return setTimeout(() => {
             socket.emit('store_data')
-        }, 2000);
+        }, 1000);
     }
 
 
@@ -146,6 +143,7 @@ export default function SimpleLineChart() {
     /* ===================== Data Delete =========  */
     if (Delete) {
         DeleteData(Delete, pathlocation, counter, setCounter)
+        socket.emit('store_data')
     }
 
     useEffect(() => {
