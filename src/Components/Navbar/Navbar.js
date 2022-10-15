@@ -36,6 +36,7 @@ const Navbar = () => {
 
                     <NavLink
                         to={'/SingleBarChart'}
+                        target="_blank"
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -45,6 +46,7 @@ const Navbar = () => {
                     </NavLink>
                     <NavLink
                         to={'/horizontalBarChart'}
+                        target="_blank"
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -55,6 +57,7 @@ const Navbar = () => {
 
                     <NavLink
                         to={'/multipleBarChart'}
+                        target="_blank"
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -65,6 +68,7 @@ const Navbar = () => {
 
                     <NavLink
                         to={'/simpleLineChart'}
+                        target="_blank"
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -75,6 +79,7 @@ const Navbar = () => {
 
                     <NavLink
                         to={'/dualLineChart'}
+                        target="_blank"
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -85,6 +90,7 @@ const Navbar = () => {
 
                     <NavLink
                         to={'/graphChart'}
+                        target="_blank"
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 '>

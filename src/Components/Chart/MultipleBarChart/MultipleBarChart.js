@@ -74,6 +74,7 @@ export default function MultipleBarChart() {
             options: {
                 scales: {
                     y: {
+                        max: 500,
                         min: 0
                     }
                 },
@@ -141,8 +142,8 @@ export default function MultipleBarChart() {
     }
     /* ===================== Data grt =========  */
     useEffect(() => {
-        
-        if(userIdentify) {
+
+        if (userIdentify) {
             socket.on("get_data", () => {
                 GetData(pathlocation, userIdentify, setData, setDelete)
             })
@@ -151,7 +152,7 @@ export default function MultipleBarChart() {
         return () => {
             socket.off("get_data")
         }
-    }, [socket,user, counter, dataisLoaded, back?.index, back?.value, back?.id, back.datasetIndex])
+    }, [socket, user, counter, dataisLoaded, back?.index, back?.value, back?.id, back.datasetIndex])
     /* ===================== Data Delete =========  */
     if (Delete) {
         DeleteData(Delete, pathlocation, counter, setCounter)
@@ -169,14 +170,15 @@ export default function MultipleBarChart() {
                         <SubmitAndDatashow pathnme={pathnme} pathLocation={'multipleBarChart'} Data={Data} setDelete={setDelete} submitPost={submitPost} />
 
                     }
-                    <div ref={ref} className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
-                        {isLoaded &&
+                    <div className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
+                        {isLoaded && <div  ref={ref}>
                             <Bar
                                 redraw={shouldRedraw}
                                 data={localOption.data}
                                 options={localOption.options}
                                 plugins={localOption.plugins}
                             />
+                        </div>
                         }
                         {/* =================== copy and share link and Download ===================== */}
                         {

@@ -28,7 +28,7 @@ export default function SimpleLineChart2() {
     const pathnme = useLocation()
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
- 
+
     if (pathnme?.search) {
         userIdentify = pathnme.search.slice(6, 10000)
     }
@@ -57,6 +57,7 @@ export default function SimpleLineChart2() {
             options: {
                 scales: {
                     y: {
+                        max: 500,
                         min: 0,
 
                     }
@@ -108,7 +109,7 @@ export default function SimpleLineChart2() {
     }
 
     useEffect(() => {
-        if(userIdentify) {
+        if (userIdentify) {
             socket.on("get_data", () => {
                 GetData(pathlocation, userIdentify, setData, setDelete)
             })
@@ -118,7 +119,7 @@ export default function SimpleLineChart2() {
             socket.off("get_data")
         }
 
-    }, [socket,user, counter, dataisLoaded, back?.index, back?.value, back?.id])
+    }, [socket, user, counter, dataisLoaded, back?.index, back?.value, back?.id])
 
     const AutoDataHandel = (index, value) => {
         UpdateData(index, pathlocation, value, setback)
@@ -144,8 +145,8 @@ export default function SimpleLineChart2() {
                         <SubmitAndDatashow pathnme={pathnme} pathLocation={'dualLineChart'} Data={Data} setDelete={setDelete} submitPost={submitPost} />
 
                     }
-                    <div ref={ref} className=' relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
-                        {isLoaded &&
+                    <div  className=' relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
+                        {isLoaded && <div ref={ref}>
                             <Line
                                 redraw={shouldRedraw}
                                 data={localOption.data}
@@ -153,6 +154,7 @@ export default function SimpleLineChart2() {
                                 plugins={localOption.plugins}
                                 fillStyle='lightGreen'
                             />
+                        </div>
                         }
                         {/* =================== copy and share link and Download ===================== */}
                         {

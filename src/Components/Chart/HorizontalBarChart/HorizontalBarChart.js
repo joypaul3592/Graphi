@@ -80,6 +80,7 @@ export default function HorizentalBar() {
                 },
                 scales: {
                     x: {
+                        max: 500,
                         min: 0
                     }
                 }
@@ -141,7 +142,7 @@ export default function HorizentalBar() {
 
                     }
                     <div ref={ref} className=' relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
-                        {isLoaded &&
+                        {isLoaded && <div ref={ref}>
                             <Bar
                                 redraw={shouldRedraw}
                                 data={localOption.data}
@@ -149,6 +150,9 @@ export default function HorizentalBar() {
                                 plugins={localOption.plugins}
                                 fillStyle='lightGreen'
                             />
+                        </div>
+
+
                         }
 
                         {/* =================== copy and share link and Download ===================== */}

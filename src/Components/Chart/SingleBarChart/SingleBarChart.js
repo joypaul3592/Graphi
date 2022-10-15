@@ -37,6 +37,12 @@ export default function BarChart2() {
 
     const BuildDataSet = ({ datas }) => {
         let labels = datas?.map(c => c?.label);
+        let maxValues = datas?.map(c => c?.yValue);
+        // var maxValue = 0;
+        // if (datas) {
+        //     maxValue = Math.floor(Math.max(...maxValues));
+        // }
+
         let options = {
             type: 'line',
             exportEnabled: true,
@@ -75,6 +81,7 @@ export default function BarChart2() {
             options: {
                 scales: {
                     y: {
+                        max: 500,
                         min: 0
                     }
                 },
@@ -125,8 +132,8 @@ export default function BarChart2() {
 
     /* ===================== Data get =========  */
     useEffect(() => {
-       
-        if(userIdentify) {
+
+        if (userIdentify) {
             socket.on("get_data", () => {
                 GetData(pathlocation, userIdentify, setData, setDelete)
             })
@@ -163,14 +170,16 @@ export default function BarChart2() {
 
                     }
 
-                    <div ref={ref} className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
-                        {isLoaded &&
-                            <Bar
+                    <div className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
+                        {isLoaded && <div ref={ref}>
+                            <Bar 
                                 redraw={shouldRedraw}
                                 data={localOption.data}
                                 options={localOption.options}
                                 plugins={localOption.plugins}
                             />
+                        </div>
+
                         }
                         {/* =================== copy and share link and Download ===================== */}
                         {
