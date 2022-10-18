@@ -13,10 +13,10 @@ import { Settime } from '../Settimecontrol';
 import SubmitAndDatashow from '../SubmitAndDatashow';
 
 import io from 'socket.io-client';
-const socket = io("https://blooming-meadow-86067.herokuapp.com")
+const socket = io("http://localhost:5000")
 
-export default function BarChart2() {
-    var userIdentify;
+export default function BarChart2({userIdentify }) {
+    
     const [Delete, setDelete] = useState(0)
     const [user] = useAuthState(auth)
     const ref = useRef();
@@ -28,15 +28,15 @@ export default function BarChart2() {
     const [counter, setCounter] = useState(0)
     const [isLoaded, setIsLoaded] = useState(false);
     const pathlocation = 'singleBar'
-    if (pathnme?.search) {
-        userIdentify = pathnme.search.slice(6, 10000)
-    }
-    else if (user?.email) {
-        userIdentify = user?.email
-    }
-
+   
     const BuildDataSet = ({ datas }) => {
         let labels = datas?.map(c => c?.label);
+        let maxValues = datas?.map(c => c?.yValue);
+        // var maxValue = 0;
+        // if (datas) {
+        //     maxValue = Math.floor(Math.max(...maxValues));
+        // }
+
         let options = {
             type: 'line',
             exportEnabled: true,
@@ -75,6 +75,7 @@ export default function BarChart2() {
             options: {
                 scales: {
                     y: {
+                        max: 500,
                         min: 0
                     }
                 },
@@ -125,8 +126,7 @@ export default function BarChart2() {
 
     /* ===================== Data get =========  */
     useEffect(() => {
-       
-        if(userIdentify) {
+        if (userIdentify) {
             socket.on("get_data", () => {
                 GetData(pathlocation, userIdentify, setData, setDelete)
             })
@@ -163,19 +163,21 @@ export default function BarChart2() {
 
                     }
 
-                    <div ref={ref} className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
-                        {isLoaded &&
+                    <div className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
+                        {isLoaded && <div ref={ref}>
                             <Bar
                                 redraw={shouldRedraw}
                                 data={localOption.data}
                                 options={localOption.options}
                                 plugins={localOption.plugins}
                             />
+                        </div>
+
                         }
                         {/* =================== copy and share link and Download ===================== */}
                         {
                             (user || pathnme?.search) && <div>
-                                <ShareData userIdentify={userIdentify} pathLocation={'SingleBarChart'} />
+                                <ShareData userIdentify={userIdentify} pathLocation={'SingleBarChart'}  />
                                 <div>
                                     <ReactToPrint
                                         trigger={() => <button className='absolute  left-10 -top-0 '><BiCloudDownload /></button>}

@@ -14,13 +14,11 @@ import SubmitAndDatashow from '../SubmitAndDatashow';
 import ShareData from '../ShareData';
 import io from 'socket.io-client';
 
-const socket = io("https://blooming-meadow-86067.herokuapp.com")
+const socket = io("http://localhost:5000")
 
 
-export default function MultipleBarChart() {
-    var userIdentify;
+export default function MultipleBarChart({userIdentify}) {
     const [Delete, setDelete] = useState()
-
     const pathlocation = "multipleBar"
     const [user] = useAuthState(auth)
     const ref = useRef()
@@ -32,14 +30,6 @@ export default function MultipleBarChart() {
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    /* =========== control data serch ===============  */
-    if (pathnme?.search) {
-        console.log("pathnme")
-        userIdentify = pathnme.search.slice(6, 10000)
-    }
-    else if (user?.email) {
-        userIdentify = user?.email
-    }
     const buildDataSet = (data) => {
 
         let labels = data?.map(c => c.label);
@@ -74,6 +64,7 @@ export default function MultipleBarChart() {
             options: {
                 scales: {
                     y: {
+                        max: 500,
                         min: 0
                     }
                 },
@@ -98,7 +89,7 @@ export default function MultipleBarChart() {
                         onDragEnd: function (e, datasetIndex, index, value) {
                             const id = DataPassDekhi[index]._id
                             if (id) {
-                                fetch(`https://blooming-meadow-86067.herokuapp.com/api/v1/grap/multipleBar/${id}`, {
+                                fetch(`http://localhost:5000/api/v1/grap/multipleBar/${id}`, {
                                     method: 'PATCH',
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -141,8 +132,8 @@ export default function MultipleBarChart() {
     }
     /* ===================== Data grt =========  */
     useEffect(() => {
-        
-        if(userIdentify) {
+
+        if (userIdentify) {
             socket.on("get_data", () => {
                 GetData(pathlocation, userIdentify, setData, setDelete)
             })
@@ -151,7 +142,7 @@ export default function MultipleBarChart() {
         return () => {
             socket.off("get_data")
         }
-    }, [socket,user, counter, dataisLoaded, back?.index, back?.value, back?.id, back.datasetIndex])
+    }, [socket, user, counter, dataisLoaded, back?.index, back?.value, back?.id, back.datasetIndex])
     /* ===================== Data Delete =========  */
     if (Delete) {
         DeleteData(Delete, pathlocation, counter, setCounter)
@@ -169,14 +160,15 @@ export default function MultipleBarChart() {
                         <SubmitAndDatashow pathnme={pathnme} pathLocation={'multipleBarChart'} Data={Data} setDelete={setDelete} submitPost={submitPost} />
 
                     }
-                    <div ref={ref} className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
-                        {isLoaded &&
+                    <div className='relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
+                        {isLoaded && <div  ref={ref}>
                             <Bar
                                 redraw={shouldRedraw}
                                 data={localOption.data}
                                 options={localOption.options}
                                 plugins={localOption.plugins}
                             />
+                        </div>
                         }
                         {/* =================== copy and share link and Download ===================== */}
                         {

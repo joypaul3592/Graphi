@@ -1,6 +1,6 @@
-var DataPassDekhi 
+var DataPassDekhi
 const ChartDatapass = (Data) => {
-    DataPassDekhi=Data
+    DataPassDekhi = Data
 }
 /* ============== crete new url =================  */
 function NewUrl() {
@@ -9,7 +9,7 @@ function NewUrl() {
 
     for (var i = 0; i < 5; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
-
     return text;
 }
-export {ChartDatapass,NewUrl,DataPassDekhi};
+const usergetData = NewUrl()
+export { ChartDatapass, NewUrl, DataPassDekhi,usergetData };

@@ -14,11 +14,10 @@ import SubmitAndDatashow from '../SubmitAndDatashow';
 
 import io from 'socket.io-client';
 
-const socket = io("https://blooming-meadow-86067.herokuapp.com")
+const socket = io("http://localhost:5000")
 
-export default function HorizentalBar() {
+export default function HorizentalBar({userIdentify}) {
 
-    var userIdentify;
     const [Delete, setDelete] = useState()
     const [user] = useAuthState(auth)
     const ref = useRef()
@@ -31,16 +30,6 @@ export default function HorizentalBar() {
     const [isLoaded, setIsLoaded] = useState(false);
     const pathlocation = 'horizentalBar'
 
-    // if(!user){
-    //     return <Loading></Loading>
-    // }
-    /* =========== control data serch ===============  */
-    if (pathnme?.search) {
-        userIdentify = pathnme.search.slice(6, 10000)
-    }
-    else if (user?.email) {
-        userIdentify = user?.email
-    }
 
     const buildDataSet = (data) => {
         let labels = data?.map(c => c.label);
@@ -80,6 +69,7 @@ export default function HorizentalBar() {
                 },
                 scales: {
                     x: {
+                        max: 500,
                         min: 0
                     }
                 }
@@ -141,7 +131,7 @@ export default function HorizentalBar() {
 
                     }
                     <div ref={ref} className=' relative  w-full bg-white mt-8 md:p-5 p-1 mb-10 md:my-0 md:mt-10 rounded-md shadow-md'>
-                        {isLoaded &&
+                        {isLoaded && <div ref={ref}>
                             <Bar
                                 redraw={shouldRedraw}
                                 data={localOption.data}
@@ -149,6 +139,9 @@ export default function HorizentalBar() {
                                 plugins={localOption.plugins}
                                 fillStyle='lightGreen'
                             />
+                        </div>
+
+
                         }
 
                         {/* =================== copy and share link and Download ===================== */}
