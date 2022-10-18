@@ -14,13 +14,11 @@ import SubmitAndDatashow from '../SubmitAndDatashow';
 import ShareData from '../ShareData';
 import io from 'socket.io-client';
 
-const socket = io("https://blooming-meadow-86067.herokuapp.com")
+const socket = io("http://localhost:5000")
 
 
-export default function MultipleBarChart() {
-    var userIdentify;
+export default function MultipleBarChart({userIdentify}) {
     const [Delete, setDelete] = useState()
-
     const pathlocation = "multipleBar"
     const [user] = useAuthState(auth)
     const ref = useRef()
@@ -32,14 +30,6 @@ export default function MultipleBarChart() {
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    /* =========== control data serch ===============  */
-    if (pathnme?.search) {
-        console.log("pathnme")
-        userIdentify = pathnme.search.slice(6, 10000)
-    }
-    else if (user?.email) {
-        userIdentify = user?.email
-    }
     const buildDataSet = (data) => {
 
         let labels = data?.map(c => c.label);
@@ -99,7 +89,7 @@ export default function MultipleBarChart() {
                         onDragEnd: function (e, datasetIndex, index, value) {
                             const id = DataPassDekhi[index]._id
                             if (id) {
-                                fetch(`https://blooming-meadow-86067.herokuapp.com/api/v1/grap/multipleBar/${id}`, {
+                                fetch(`http://localhost:5000/api/v1/grap/multipleBar/${id}`, {
                                     method: 'PATCH',
                                     headers: {
                                         'Content-Type': 'application/json',

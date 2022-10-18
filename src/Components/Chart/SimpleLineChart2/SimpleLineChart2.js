@@ -13,10 +13,10 @@ import SubmitAndDatashow from '../SubmitAndDatashow';
 import ShareData from '../ShareData';
 
 import io from 'socket.io-client';
-const socket = io("https://blooming-meadow-86067.herokuapp.com")
+const socket = io("http://localhost:5000")
 
-export default function SimpleLineChart2() {
-    var userIdentify;
+export default function SimpleLineChart2({userIdentify}) {
+
     const [Delete, setDelete] = useState()
     const pathlocation = "dualLine";
     const ref = useRef()
@@ -28,13 +28,6 @@ export default function SimpleLineChart2() {
     const pathnme = useLocation()
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-
-    if (pathnme?.search) {
-        userIdentify = pathnme.search.slice(6, 10000)
-    }
-    else if (user?.email) {
-        userIdentify = user?.email
-    }
 
     const buildDataSet = (data) => {
         // console.log(data, value, index)

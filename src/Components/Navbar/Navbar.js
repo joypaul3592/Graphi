@@ -7,9 +7,11 @@ import { RiBarChartFill } from "react-icons/ri";
 import { MdAutoGraph } from "react-icons/md";
 import { AiOutlineBorderlessTable, AiOutlineDotChart } from "react-icons/ai";
 import joinUs from '../../assect/JoinusImg.png'
-const Navbar = () => {
+const Navbar = ({ GetDaNewUrl }) => {
     const [menu, setMenu] = useState(false)
     const { pathname } = useLocation()
+    const urlLInkData = `user=${GetDaNewUrl}`
+    
     return (
         <div className=' flex justify-between items-center lg:flex-col h-full lg:justify-center'>
             <div className='lg:hidden cursor-pointer hover:shadow-lg h-8 w-8 fixed right-5 top-5 rounded-md z-[50000]'>
@@ -24,7 +26,7 @@ const Navbar = () => {
                 <hr className=' bg-teal-700  hidden lg:block h-[2px] w-8/12  ' />
                 <div className={`bg-white lg:bg-transparent lg:bg-opacity-0 bg-opacity-40 backdrop-blur lg:shadow-none lg:backdrop-blur-none shadow-md lg:relative  fixed top-0 left-0 py-5 w-80 lg:w-full pl-10 lg:pl-0 pt-10 z-[10000] lg:pt-5 rounded-md  ${menu ? 'block' : 'hidden lg:block'}`}>
                     <NavLink
-                        to={'/'}
+                        to={`/?${GetDaNewUrl?urlLInkData:''}`}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -35,8 +37,7 @@ const Navbar = () => {
 
 
                     <NavLink
-                        to={'/SingleBarChart'}
-                        target="_blank"
+                        to={`/SingleBarChart/?${GetDaNewUrl?urlLInkData:''}`}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -45,8 +46,7 @@ const Navbar = () => {
                         </div>
                     </NavLink>
                     <NavLink
-                        to={'/horizontalBarChart'}
-                        target="_blank"
+                        to={`/horizontalBarChart/?${GetDaNewUrl?urlLInkData:''}`}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -56,8 +56,7 @@ const Navbar = () => {
                     </NavLink>
 
                     <NavLink
-                        to={'/multipleBarChart'}
-                        target="_blank"
+                        to={`/multipleBarChart/?${GetDaNewUrl?urlLInkData:''}`}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -67,8 +66,7 @@ const Navbar = () => {
                     </NavLink>
 
                     <NavLink
-                        to={'/simpleLineChart'}
-                        target="_blank"
+                        to={`/simpleLineChart/?${GetDaNewUrl?urlLInkData:''}`}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -78,8 +76,7 @@ const Navbar = () => {
                     </NavLink>
 
                     <NavLink
-                        to={'/dualLineChart'}
-                        target="_blank"
+                        to={`/dualLineChart/?${GetDaNewUrl?urlLInkData:''}`}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 mb-8'>
@@ -89,8 +86,7 @@ const Navbar = () => {
                     </NavLink>
 
                     <NavLink
-                        to={'/graphChart'}
-                        target="_blank"
+                        to={`/graphChart/?${GetDaNewUrl?urlLInkData:''}`}
                         className={({ isActive }) => (` text-md font-medium bg-sky-900  rounded-3xl ${isActive ? ' text-teal-500' : 'text-black'}`)}
                     >
                         <div className='flex items-center  px-3 '>

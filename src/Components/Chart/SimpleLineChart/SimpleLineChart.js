@@ -12,9 +12,8 @@ import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel'
 import ShareData from '../ShareData';
 import SubmitAndDatashow from '../SubmitAndDatashow';
 import io from 'socket.io-client';
-const socket = io("https://blooming-meadow-86067.herokuapp.com")
-export default function SimpleLineChart() {
-    var userIdentify;
+const socket = io("http://localhost:5000")
+export default function SimpleLineChart({userIdentify}) {
     const [Delete, setDelete] = useState()
     const pathlocation = "simpleLine";
     const ref = useRef()
@@ -27,16 +26,6 @@ export default function SimpleLineChart() {
     const [shouldRedraw] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // if(!user){
-    //     return <Loading></Loading>
-    // }
-    /* =========== control data serch ===============  */
-    if (pathnme?.search) {
-        userIdentify = pathnme.search.slice(6, 10000)
-    }
-    else if (user?.email) {
-        userIdentify = user?.email
-    }
 
     const buildDataSet = (data) => {
         let labels = data?.map(c => c.label);
