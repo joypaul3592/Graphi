@@ -14,7 +14,7 @@ import SubmitAndDatashow from '../SubmitAndDatashow';
 import ShareData from '../ShareData';
 import io from 'socket.io-client';
 
-const socket = io("http://localhost:5000")
+const socket = io("https://blooming-meadow-86067.herokuapp.com")
 
 
 export default function MultipleBarChart({userIdentify}) {
@@ -88,7 +88,7 @@ export default function MultipleBarChart({userIdentify}) {
                         onDragEnd: function (e, datasetIndex, index, value) {
                             const id = DataPassDekhi[index]._id
                             if (id) {
-                                fetch(` http://localhost:5000/api/v1/grap/multipleBar/${id}`, {
+                                fetch(` https://blooming-meadow-86067.herokuapp.com/api/v1/grap/multipleBar/${id}`, {
                                     method: 'PATCH',
                                     headers: {
                                         'Content-Type': 'application/json',

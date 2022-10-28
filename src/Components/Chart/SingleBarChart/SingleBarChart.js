@@ -13,7 +13,7 @@ import { Settime } from '../Settimecontrol';
 import SubmitAndDatashow from '../SubmitAndDatashow';
 
 import io from 'socket.io-client';
-const socket = io("http://localhost:5000")
+const socket = io("https://blooming-meadow-86067.herokuapp.com")
 
 export default function BarChart2({userIdentify }) {
     
