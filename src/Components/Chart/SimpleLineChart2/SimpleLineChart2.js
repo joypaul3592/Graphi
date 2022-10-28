@@ -13,7 +13,7 @@ import SubmitAndDatashow from '../SubmitAndDatashow';
 import ShareData from '../ShareData';
 
 import io from 'socket.io-client';
-const socket = io(" https://blooming-meadow-86067.herokuapp.com")
+const socket = io(" http://localhost:5000")
 
 export default function SimpleLineChart2({userIdentify}) {
 
@@ -50,7 +50,6 @@ export default function SimpleLineChart2({userIdentify}) {
             options: {
                 scales: {
                     y: {
-                        max: 500,
                         min: 0,
 
                     }

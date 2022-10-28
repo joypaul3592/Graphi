@@ -12,7 +12,7 @@ import { DeleteData, GetData, PostData, UpdateData } from '../BackendDatahendel'
 import ShareData from '../ShareData';
 import SubmitAndDatashow from '../SubmitAndDatashow';
 import io from 'socket.io-client';
-const socket = io("https://blooming-meadow-86067.herokuapp.com")
+const socket = io("http://localhost:5000")
 export default function SimpleLineChart({userIdentify}) {
     const [Delete, setDelete] = useState()
     const pathlocation = "simpleLine";
@@ -46,13 +46,11 @@ export default function SimpleLineChart({userIdentify}) {
             options: {
                 scales: {
                     y: {
-                        max: 500,
                         type: 'linear',
                         position: 'left',
-                        min: 0
+                        min: 0,
                     },
                     y2: {
-                        max: 500,
                         type: 'linear',
                         position: 'right',
                         min: 0
