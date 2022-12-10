@@ -1,1 +1,1 @@
-https://blooming-meadow-86067.herokuapp.com
+https://graphi-server-production.up.railway.app

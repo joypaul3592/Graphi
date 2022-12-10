@@ -19,9 +19,6 @@ export default function HomeBarChart() {
 
     const buildDataSet = (data) => {
 
-
-        // let labels = data?.map(c => c.label);
-
         let options = {
             type: 'line',
             data: {
@@ -116,7 +113,7 @@ export default function HomeBarChart() {
 
     /* ===================== Data grt =========  */
     useEffect(() => {
-        fetch('https://blooming-meadow-86067.herokuapp.com/api/v1/grap', {
+        fetch('https://graphi-server-production.up.railway.app/api/v1/grap', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -133,7 +130,7 @@ export default function HomeBarChart() {
     const [Delete, setDelete] = useState()
     if (Delete) {
         const id = Delete;
-        fetch(`https://blooming-meadow-86067.herokuapp.com/api/v1/grap/${id}`, {
+        fetch(`https://graphi-server-production.up.railway.app/api/v1/grap/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -155,7 +152,7 @@ export default function HomeBarChart() {
     const submitPost = (label, yValue) => {
         if (label && yValue) {
             const Data = { label: label, yValue: yValue }
-            fetch('https://blooming-meadow-86067.herokuapp.com/api/v1/grap', {
+            fetch('https://graphi-server-production.up.railway.app/api/v1/grap', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
